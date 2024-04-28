@@ -1,10 +1,5 @@
-// Commander
-import { createCommand } from 'commander'
-
-// Constants
+import { program } from '../constants/huskybc'
 import { VERSION } from '../constants/version'
-
-export const program = createCommand('HuskyBC')
 
 export function configureCLI() {
   program
