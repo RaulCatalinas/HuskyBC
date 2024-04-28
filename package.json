@@ -1,0 +1,28 @@
+{
+  "name": "huskybc",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier src --check",
+    "format:write": "prettier src --write"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "@types/bun": "1.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "eslint": "^8.0.1",
+    "eslint-config-love": "47.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
+    "markdownlint": "0.34.0",
+    "prettier": "3.2.5",
+    "typescript": "5.4.5"
+  }
+}
