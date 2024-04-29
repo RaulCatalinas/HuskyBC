@@ -1,5 +1,8 @@
+// Constants
+import { REPOSITORY } from '@/constants/github'
+
+// Third-Party libraries
 import opener from 'opener'
-import { REPOSITORY } from '../constants/github'
 
 export const handlerOptionBuild = () => {
   console.log("Generating Husky's configuration")

@@ -1,9 +1,11 @@
 // Constants
-import { program } from '../constants/huskybc'
+import { program } from '@/constants/huskybc'
+
+// Controllers
 import {
   handlerOptionBuild,
   handlerOptionCollaborate
-} from '../controllers/handlers-options'
+} from '@/controllers/handlers-options'
 
 export function configureOptions() {
   program

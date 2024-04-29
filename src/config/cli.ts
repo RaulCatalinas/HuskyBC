@@ -1,5 +1,5 @@
-import { program } from '../constants/huskybc'
-import { VERSION } from '../constants/version'
+import { program } from '@/constants/huskybc'
+import { VERSION } from '@/constants/version'
 
 export function configureCLI() {
   program
