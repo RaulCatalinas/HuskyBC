@@ -10,9 +10,18 @@ import {
 export function configureOptions() {
   program
     .option(
-      '--collaborate',
+      '-co, --collaborate',
       'Open GitHub repository for collaboration',
       handlerOptionCollaborate
     )
-    .option('--build', "Start Husky's configuration", handlerOptionBuild)
+    .option('-b, --build', "Start Husky's configuration", handlerOptionBuild)
+}
+
+export function configureDefaultOption() {
+  const options = program.opts()
+
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  if (!options.build && !options.collaborate && !options.b && !options.co) {
+    program.help()
+  }
 }
