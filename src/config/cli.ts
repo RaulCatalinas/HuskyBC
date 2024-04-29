@@ -5,4 +5,5 @@ export function configureCLI() {
   program
     .description('Command line for easy Husky configuration')
     .version(VERSION)
+    .showHelpAfterError()
 }
