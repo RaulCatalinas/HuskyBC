@@ -24,7 +24,7 @@
     "@types/bun": "1.1.0",
     "@types/opener": "1.4.3",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "eslint": "^8.0.1",
+    "eslint": "^9.1.1",
     "eslint-config-love": "47.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
