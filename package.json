@@ -1,6 +1,6 @@
 {
   "name": "huskybc",
-  "module": "build/src/index.js",
+  "module": "dist/index.js",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier src --check",
     "format:write": "prettier src --write",
-    "build": "swc src -d build --config-file .swcrc --ignore src/types",
+    "build": "swc src -d dist --config-file .swcrc --ignore src/types --strip-leading-paths",
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
