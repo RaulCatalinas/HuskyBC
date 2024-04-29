@@ -5,12 +5,13 @@ import { REPOSITORY } from '@/constants/github'
 import opener from 'opener'
 
 export const handlerOptionBuild = () => {
-  console.log("Generating Husky's configuration")
+  console.log("Generating Husky's configuration...")
+
   // code...
 }
 
-export const handlerOptionCollaborate = async () => {
+export const handlerOptionCollaborate = () => {
   console.log('Open GitHub repository for collaboration...')
-  await Bun.sleep(500)
-  opener(REPOSITORY)
+
+  setTimeout(() => opener(REPOSITORY), 500)
 }
