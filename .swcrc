@@ -5,6 +5,10 @@
     "target": "esnext",
     "parser": {
       "syntax": "typescript"
+    },
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
     }
   }
 }

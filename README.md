@@ -1,15 +1,43 @@
-# huskybc
+# HuskyBC
 
-To install dependencies:
+HuskyBC is a command line for easy Husky configuration
 
-```bash
-bun install
-```
+## Run Locally
 
-To run:
+Clone the project
 
 ```bash
-bun run index.ts
+  git clone https://github.com/RaulCatalinas/HuskyBC.git
+  #or
+  git clone git@github.com:RaulCatalinas/HuskyBC.git
+  #or
+  gh repo clone RaulCatalinas/HuskyBC
 ```
 
-This project was created using `bun init` in bun v1.1.4. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+Go to the project directory
+
+```bash
+  cd HuskyBC
+```
+
+Install dependencies
+
+```bash
+  bun install
+```
+
+Running the CLI
+
+```bash
+  bun src/index.ts
+```
+
+## Feedback
+
+If you have any feedback, please reach out to us at <raulcatalinas@gmail.com>
+
+## Project Overview
+
+This project is developed by a team of passionate contributors.
+
+To learn more about the people behind the project, please visit the [Contributors](AUTHORS.md) page.
