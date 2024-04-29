@@ -1,16 +1,16 @@
-// Third-Party libraries
-import opener from 'opener'
-
 // Constants
-import { REPOSITORY } from '../constants/github'
 import { program } from '../constants/huskybc'
+import {
+  handlerOptionBuild,
+  handlerOptionCollaborate
+} from '../controllers/handlers-options'
 
 export function configureOptions() {
-  program.option(
-    '--collaborate',
-    'Open GitHub repository for collaboration',
-    () => {
-      opener(REPOSITORY)
-    }
-  )
+  program
+    .option(
+      '--collaborate',
+      'Open GitHub repository for collaboration',
+      handlerOptionCollaborate
+    )
+    .option('--build', "Start Husky's configuration", handlerOptionBuild)
 }
