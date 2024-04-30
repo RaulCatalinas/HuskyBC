@@ -11,7 +11,9 @@ import { UTF8_ENCODING } from '@/constants/encoding'
 // Utils
 import { installDependencies } from './dependencies'
 
-export async function configureCommitlint(packageManagerToUse: PackageManager) {
+export async function generateCommitlintConfig(
+  packageManagerToUse: PackageManager
+) {
   try {
     console.log('Configuring commitlint...')
 

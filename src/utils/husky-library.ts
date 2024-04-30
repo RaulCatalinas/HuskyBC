@@ -12,7 +12,7 @@ import fs from 'node:fs/promises'
 import { UTF8_ENCODING } from '@/constants/encoding'
 import { HUSKY_CONFIG } from '@/constants/husky-library'
 
-export async function configureHusky(packageManagerToUse: PackageManager) {
+export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
   try {
     installDependencies({
       packageManagerToUse,
