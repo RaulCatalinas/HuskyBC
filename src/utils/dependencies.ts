@@ -18,4 +18,6 @@ export function installDependencies({
   console.log(`Installing dependencies using: ${packageManager}...`)
 
   // TODO: Implement the logic for installing dependencies using the package manager of the user's choice.
+
+  console.log('Installed dependencies')
 }

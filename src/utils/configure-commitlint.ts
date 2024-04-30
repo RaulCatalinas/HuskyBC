@@ -24,8 +24,6 @@ export async function configureCommitlint(packageManagerToUse: PackageManager) {
       ]
     })
 
-    console.log('Installed dependencies')
-
     console.log('Creating configuration files...')
 
     await Promise.all([

@@ -19,8 +19,6 @@ export async function configureHusky(packageManagerToUse: PackageManager) {
       packagesToInstall: 'husky'
     })
 
-    console.log('Installed dependencies')
-
     console.log('Creating configuration file...')
 
     await fs.writeFile('.husky/pre-commit', HUSKY_CONFIG[packageManagerToUse], {
