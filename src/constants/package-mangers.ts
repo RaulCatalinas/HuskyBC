@@ -1,1 +1,1 @@
-export const PACKAGE_MANGERS = ['npm', 'yarn', 'pnpm', 'bun']
+export const PACKAGE_MANGERS = ['npm', 'yarn', 'pnpm', 'bun'] as const

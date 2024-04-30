@@ -4,7 +4,10 @@ import { PACKAGE_MANGERS } from '@/constants/package-mangers'
 // Third-Party libraries
 import inquirer from 'inquirer'
 
-export async function getPackageManger(): Promise<string> {
+// Types
+import type { PackageManager } from '@/types/package-manger'
+
+export async function getPackageManger(): Promise<PackageManager> {
   try {
     const { packageManager } = await inquirer.prompt({
       type: 'rawlist',
