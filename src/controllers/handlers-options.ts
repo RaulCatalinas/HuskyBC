@@ -4,7 +4,7 @@ import { REPOSITORY } from '@/constants/github'
 // Third-Party libraries
 import opener from 'opener'
 
-export const handlerOptionBuild = () => {
+export const handlerOptionBuild = async () => {
   console.log("Generating Husky's configuration...")
 
   // code...
