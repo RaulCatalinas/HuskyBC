@@ -11,7 +11,7 @@ export const handlerOptionBuild = async () => {
 }
 
 export const handlerOptionCollaborate = () => {
-  console.log('Open GitHub repository for collaboration...')
+  console.log('Opening the GitHub repository...')
 
   setTimeout(() => opener(REPOSITORY), 500)
 }
