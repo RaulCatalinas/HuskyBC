@@ -56,7 +56,9 @@ export async function configureCommitlint(packageManagerToUse: PackageManager) {
       )
     ])
 
-    console.log('Configuration files created')
+    console.log(
+      'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created'
+    )
   } catch (error) {
     console.error(error)
     throw new Error('Something went wrong, try again later.')
