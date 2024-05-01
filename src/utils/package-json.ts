@@ -1,5 +1,6 @@
 // NodeJS
 import fs from 'node:fs/promises'
+import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
@@ -14,7 +15,9 @@ interface Props {
 
 export async function addScript({ key, value }: Props) {
   try {
-    const packageJsonData = await fs.readFile('./package.json', {
+    const packageJsonPath = `${process.cwd()}/package.json`
+
+    const packageJsonData = await fs.readFile(packageJsonPath, {
       encoding: UTF8_ENCODING
     })
 
@@ -23,7 +26,7 @@ export async function addScript({ key, value }: Props) {
     packageJsonObj.scripts[key] = value
 
     await fs.writeFile(
-      './package.json',
+      packageJsonPath,
       JSON.stringify(packageJsonObj, null, 2),
       {
         encoding: UTF8_ENCODING
