@@ -59,6 +59,7 @@ export async function generateCommitlintConfig(
     console.log(
       'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created'
     )
+    console.log("commitlint's configuration generated successfully")
   } catch (error) {
     console.error(error)
     throw new Error('Something went wrong, try again later.')

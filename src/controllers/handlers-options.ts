@@ -4,10 +4,28 @@ import { REPOSITORY } from '@/constants/github'
 // Third-Party libraries
 import opener from 'opener'
 
-export const handlerOptionBuild = async () => {
-  console.log("Generating Husky's configuration...")
+// Utils
+import { addCommitlint } from '@/utils/add-commitlint'
+import { generateCommitlintConfig } from '@/utils/commitlint'
+import { generateHuskyConfig } from '@/utils/husky-library'
+import { getPackageManger } from '@/utils/package-managers'
 
-  // code...
+// NodeJS
+import process from 'node:process'
+
+export const handlerOptionBuild = async () => {
+  try {
+    const packageManagerToUse = await getPackageManger()
+    const useCommitlint = await addCommitlint()
+
+    await generateHuskyConfig(packageManagerToUse)
+
+    if (useCommitlint) {
+      await generateCommitlintConfig(packageManagerToUse)
+    }
+  } catch (error) {
+    process.exit(1)
+  }
 }
 
 export const handlerOptionCollaborate = () => {

@@ -14,6 +14,8 @@ import { HUSKY_CONFIG } from '@/constants/husky-library'
 
 export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
   try {
+    console.log("Generating Husky's configuration...")
+
     await installDependencies({
       packageManagerToUse,
       packagesToInstall: 'husky'
@@ -32,6 +34,7 @@ export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
     await addScript({ key: 'prepare', value: 'husky' })
 
     console.log('Modified package.json')
+    console.log("Husky's configuration generated successfully")
   } catch (error) {
     console.error(error)
     throw new Error('Something went wrong, try again later.')
