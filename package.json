@@ -13,6 +13,7 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
+    "@npmcli/promise-spawn": "7.0.1",
     "commander": "12.0.0",
     "inquirer": "9.2.20",
     "opener": "1.5.2"
@@ -24,6 +25,7 @@
     "@swc/core": "1.4.17",
     "@types/bun": "1.1.0",
     "@types/inquirer": "9.0.7",
+    "@types/npmcli__promise-spawn": "6.0.3",
     "@types/opener": "1.4.3",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "eslint": "^8.0.1",

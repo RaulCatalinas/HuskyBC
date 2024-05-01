@@ -17,7 +17,7 @@ export async function generateCommitlintConfig(
   try {
     console.log('Configuring commitlint...')
 
-    installDependencies({
+    await installDependencies({
       packageManagerToUse,
       packagesToInstall: [
         'lint-staged',

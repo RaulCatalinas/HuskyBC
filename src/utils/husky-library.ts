@@ -14,7 +14,7 @@ import { HUSKY_CONFIG } from '@/constants/husky-library'
 
 export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
   try {
-    installDependencies({
+    await installDependencies({
       packageManagerToUse,
       packagesToInstall: 'husky'
     })
