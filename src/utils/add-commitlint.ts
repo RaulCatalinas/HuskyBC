@@ -1,4 +1,11 @@
+// Third-Party libraries
 import inquirer from 'inquirer'
+
+// Constants
+import { ErrorMessages } from '@/constants/errors'
+
+// NodeJS
+import process from 'node:process'
 
 export async function addCommitlint(): Promise<boolean> {
   try {
@@ -10,8 +17,8 @@ export async function addCommitlint(): Promise<boolean> {
     })
 
     return addCommitlint
-  } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+  } catch {
+    console.error(ErrorMessages.Default)
+    process.exit(1)
   }
 }

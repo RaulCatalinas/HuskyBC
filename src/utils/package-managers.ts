@@ -1,4 +1,5 @@
 // Constants
+import { ErrorMessages } from '@/constants/errors'
 import { PACKAGE_MANGERS } from '@/constants/package-mangers'
 
 // Third-Party libraries
@@ -6,6 +7,9 @@ import inquirer from 'inquirer'
 
 // Types
 import type { PackageManager } from '@/types/package-manger'
+
+// NodeJS
+import process from 'node:process'
 
 export async function getPackageManger(): Promise<PackageManager> {
   try {
@@ -18,7 +22,7 @@ export async function getPackageManger(): Promise<PackageManager> {
 
     return packageManager
   } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+    console.error(ErrorMessages.Default)
+    process.exit(1)
   }
 }

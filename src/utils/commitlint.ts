@@ -7,6 +7,7 @@ import fs from 'node:fs/promises'
 // Constants
 import { COMMITLINT_CONFIG } from '@/constants/commitlint'
 import { UTF8_ENCODING } from '@/constants/encoding'
+import { ErrorMessages } from '@/constants/errors'
 
 // Utils
 import { installDependencies } from './dependencies'
@@ -61,7 +62,7 @@ export async function generateCommitlintConfig(
     )
     console.log("commitlint's configuration generated successfully")
   } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+    console.error(ErrorMessages.Commitlint)
+    process.exit(1)
   }
 }

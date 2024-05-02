@@ -7,9 +7,11 @@ import { addScript } from './package-json'
 
 // NodeJS
 import fs from 'node:fs/promises'
+import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
+import { ErrorMessages } from '@/constants/errors'
 import { HUSKY_CONFIG } from '@/constants/husky-library'
 
 export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
@@ -35,8 +37,8 @@ export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
 
     console.log('Modified package.json')
     console.log("Husky's configuration generated successfully")
-  } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+  } catch {
+    console.error(ErrorMessages.Husky)
+    process.exit(1)
   }
 }

@@ -1,4 +1,5 @@
 // Constants
+import { ErrorMessages } from '@/constants/errors'
 import { REPOSITORY } from '@/constants/github'
 
 // Third-Party libraries
@@ -23,7 +24,8 @@ export const handlerOptionBuild = async () => {
     if (useCommitlint) {
       await generateCommitlintConfig(packageManagerToUse)
     }
-  } catch (error) {
+  } catch {
+    console.error(ErrorMessages.Default)
     process.exit(1)
   }
 }

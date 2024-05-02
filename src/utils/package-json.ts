@@ -4,6 +4,7 @@ import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
+import { ErrorMessages } from '@/constants/errors'
 
 // Types
 import type { PackageJson } from '@/types/package-json'
@@ -21,9 +22,9 @@ export async function addScript({ key, value }: Props) {
       await existPackageJson(packageJsonPath)
 
     if (!existPackageJsonInTheCurrentDirectory) {
-      throw new Error(
-        "The package.json file wasn't found in the current directory."
-      )
+      console.error(ErrorMessages.NotFound)
+
+      process.exit(1)
     }
 
     const packageJsonData = await fs.readFile(packageJsonPath, {
@@ -41,17 +42,17 @@ export async function addScript({ key, value }: Props) {
         encoding: UTF8_ENCODING
       }
     )
-  } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+  } catch {
+    console.error(ErrorMessages.Default)
+    process.exit(1)
   }
 }
 
 async function existPackageJson(path: string) {
   try {
     return await fs.exists(path)
-  } catch (error) {
-    console.error(error)
-    throw new Error('Something went wrong, try again later.')
+  } catch {
+    console.error(ErrorMessages.Default)
+    process.exit(1)
   }
 }
