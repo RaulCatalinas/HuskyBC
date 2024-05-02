@@ -17,6 +17,15 @@ export async function addScript({ key, value }: Props) {
   try {
     const packageJsonPath = `${process.cwd()}/package.json`
 
+    const existPackageJsonInTheCurrentDirectory =
+      await existPackageJson(packageJsonPath)
+
+    if (!existPackageJsonInTheCurrentDirectory) {
+      throw new Error(
+        "The package.json file wasn't found in the current directory."
+      )
+    }
+
     const packageJsonData = await fs.readFile(packageJsonPath, {
       encoding: UTF8_ENCODING
     })
@@ -32,6 +41,15 @@ export async function addScript({ key, value }: Props) {
         encoding: UTF8_ENCODING
       }
     )
+  } catch (error) {
+    console.error(error)
+    throw new Error('Something went wrong, try again later.')
+  }
+}
+
+async function existPackageJson(path: string) {
+  try {
+    return await fs.exists(path)
   } catch (error) {
     console.error(error)
     throw new Error('Something went wrong, try again later.')
