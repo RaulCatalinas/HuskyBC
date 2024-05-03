@@ -10,3 +10,4 @@ markdownlint.jsonc
 tsconfig.json
 bun.lockb
 .github
+CONTRIBUTING.md

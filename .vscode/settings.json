@@ -12,5 +12,9 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "markdownlint.config": {
+    "default": true,
+    "MD029": false
   }
 }
