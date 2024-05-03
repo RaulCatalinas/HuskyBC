@@ -28,5 +28,3 @@ export async function getPackageManger(): Promise<PackageManager> {
     process.exit(1)
   }
 }
-
-await getPackageManger()
