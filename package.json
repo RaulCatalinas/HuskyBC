@@ -1,5 +1,6 @@
 {
   "name": "huskybc",
+  "main": "dist/index.js",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -66,8 +67,5 @@
     "husky-config",
     "commitlint-config",
     "husky-hooks"
-  ],
-  "bin": {
-    "huskybc": "dist/index.js"
-  }
+  ]
 }

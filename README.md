@@ -4,13 +4,16 @@ HuskyBC is a command line for easy Husky configuration
 
 ## Run
 
+1. Install the CLI
+
 ```bash
-  npx huskybc
-  # or
-  pnpm dlx huskybc
-  # or
-  bunx huskybc
-  # Work in progress: yarn
+npm install huskybc -g
+```
+
+2. Run the CLI
+
+```bash
+huskybc
 ```
 
 ## Feedback
