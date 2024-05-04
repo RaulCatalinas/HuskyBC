@@ -9,7 +9,7 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier src --check",
     "format:write": "prettier src --write",
-    "build": "swc src -d dist --config-file .swcrc --ignore src/types --strip-leading-paths",
+    "build": "esbuild --minify --bundle --format=esm --platform=node --outfile=dist/index.js src/index.ts",
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
@@ -19,15 +19,12 @@
     "opener": "1.5.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.3.0",
-    "@commitlint/config-conventional": "19.2.2",
-    "@swc/cli": "0.3.12",
-    "@swc/core": "1.4.17",
-    "@types/bun": "1.1.0",
+    "@types/bun": "1.1.1",
     "@types/inquirer": "9.0.7",
     "@types/npmcli__promise-spawn": "6.0.3",
     "@types/opener": "1.4.3",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "esbuild": "0.20.2",
     "eslint": "^8.0.1",
     "eslint-config-love": "47.0.0",
     "eslint-plugin-import": "^2.25.2",
