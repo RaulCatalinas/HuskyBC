@@ -13,12 +13,14 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@npmcli/promise-spawn": "7.0.1",
+    "@npmcli/promise-spawn": "7.0.2",
     "commander": "12.0.0",
     "inquirer": "9.2.20",
     "opener": "1.5.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
     "@types/bun": "1.1.1",
     "@types/inquirer": "9.0.7",
     "@types/npmcli__promise-spawn": "6.0.3",
