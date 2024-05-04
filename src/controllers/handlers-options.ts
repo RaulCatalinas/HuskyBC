@@ -9,8 +9,8 @@ import opener from 'opener'
 import { addCommitlint } from '@/utils/add-commitlint'
 import { generateCommitlintConfig } from '@/utils/commitlint'
 import { generateHuskyConfig } from '@/utils/husky-library'
-import { existPackageJson } from '@/utils/package-json'
 import { getPackageManger } from '@/utils/package-managers'
+import { exists } from '@/utils/user-os'
 
 // NodeJS
 import process from 'node:process'
@@ -18,8 +18,8 @@ import process from 'node:process'
 export const handlerOptionBuild = async () => {
   try {
     const packageJsonPath = `${process.cwd()}/package.json`
-    const existPackageJsonInTheCurrentDirectory =
-      await existPackageJson(packageJsonPath)
+
+    const existPackageJsonInTheCurrentDirectory = await exists(packageJsonPath)
 
     if (!existPackageJsonInTheCurrentDirectory) {
       console.error(ErrorMessages.NotFound)
@@ -30,7 +30,7 @@ export const handlerOptionBuild = async () => {
     const packageManagerToUse = await getPackageManger()
     const useCommitlint = await addCommitlint()
 
-    await generateHuskyConfig(packageManagerToUse)
+    await generateHuskyConfig({ packageManagerToUse, packageJsonPath })
 
     if (useCommitlint) {
       await generateCommitlintConfig(packageManagerToUse)

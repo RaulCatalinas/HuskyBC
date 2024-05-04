@@ -37,12 +37,3 @@ export async function addScript({ key, value, packageJsonPath }: Props) {
     process.exit(1)
   }
 }
-
-export async function existPackageJson(path: string) {
-  try {
-    return await fs.exists(path)
-  } catch {
-    console.error(ErrorMessages.Default)
-    process.exit(1)
-  }
-}

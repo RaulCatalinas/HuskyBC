@@ -4,6 +4,7 @@ import type { PackageManager } from '@/types/package-manger'
 // Utils
 import { installDependencies } from './dependencies'
 import { addScript } from './package-json'
+import { createFolder, exists } from './user-os'
 
 // NodeJS
 import fs from 'node:fs/promises'
@@ -14,7 +15,15 @@ import { UTF8_ENCODING } from '@/constants/encoding'
 import { ErrorMessages } from '@/constants/errors'
 import { HUSKY_CONFIG } from '@/constants/husky-library'
 
-export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
+interface Props {
+  packageManagerToUse: PackageManager
+  packageJsonPath: string
+}
+
+export async function generateHuskyConfig({
+  packageManagerToUse,
+  packageJsonPath
+}: Props) {
   try {
     console.log("Generating Husky's configuration...")
 
@@ -25,6 +34,12 @@ export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
 
     console.log('Creating configuration file...')
 
+    const existsHuskyFolder = await exists(`${process.cwd()}/.husky`)
+
+    if (!existsHuskyFolder) {
+      await createFolder('.husky')
+    }
+
     await fs.writeFile('.husky/pre-commit', HUSKY_CONFIG[packageManagerToUse], {
       encoding: UTF8_ENCODING
     })
@@ -33,7 +48,7 @@ export async function generateHuskyConfig(packageManagerToUse: PackageManager) {
 
     console.log('Modifying package.json')
 
-    await addScript({ key: 'prepare', value: 'husky' })
+    await addScript({ key: 'prepare', value: 'husky', packageJsonPath })
 
     console.log('Modified package.json')
     console.log("Husky's configuration generated successfully")
