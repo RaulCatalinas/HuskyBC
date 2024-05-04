@@ -9,7 +9,7 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier src --check",
     "format:write": "prettier src --write",
-    "build": "esbuild --minify --bundle --format=esm --platform=node --outfile=dist/index.js --packages=external src/index.ts",
+    "build": "esbuild --minify --bundle --format=esm --platform=node --outfile=dist/index.js src/index.ts",
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
