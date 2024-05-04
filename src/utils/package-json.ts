@@ -12,11 +12,14 @@ import type { PackageJson } from '@/types/package-json'
 interface Props {
   key: string
   value: string
-  packageJsonPath: string
 }
 
-export async function addScript({ key, value, packageJsonPath }: Props) {
+export async function addScript({ key, value }: Props) {
   try {
+    const isBuild = process.env.NODE_ENV === 'production'
+
+    const packageJsonPath = isBuild ? '../package.json' : './package.json'
+
     const packageJsonData = await fs.readFile(packageJsonPath, {
       encoding: UTF8_ENCODING
     })
@@ -32,15 +35,6 @@ export async function addScript({ key, value, packageJsonPath }: Props) {
         encoding: UTF8_ENCODING
       }
     )
-  } catch {
-    console.error(ErrorMessages.Default)
-    process.exit(1)
-  }
-}
-
-export async function existPackageJson(path: string) {
-  try {
-    return await fs.exists(path)
   } catch {
     console.error(ErrorMessages.Default)
     process.exit(1)
