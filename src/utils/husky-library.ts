@@ -2,7 +2,9 @@
 import type { PackageManager } from '@/types/package-manger'
 
 // Utils
+import { writeMessage } from './console'
 import { installDependencies } from './dependencies'
+import { getErrorMessage } from './errors'
 import { addScript } from './package-json'
 import { createFolder, exists } from './user-os'
 
@@ -12,7 +14,6 @@ import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
-import { ErrorMessages } from '@/constants/errors'
 import { HUSKY_CONFIG } from '@/constants/husky-library'
 
 interface Props {
@@ -25,14 +26,20 @@ export async function generateHuskyConfig({
   packageJsonPath
 }: Props) {
   try {
-    console.log("Generating Husky's configuration...")
+    writeMessage({
+      type: 'config',
+      message: "Generating Husky's configuration..."
+    })
 
     await installDependencies({
       packageManagerToUse,
       packagesToInstall: 'husky'
     })
 
-    console.log('Creating configuration file...')
+    writeMessage({
+      type: 'info',
+      message: 'Creating configuration file...'
+    })
 
     const existsHuskyFolder = await exists(`${process.cwd()}/.husky`)
 
@@ -44,16 +51,31 @@ export async function generateHuskyConfig({
       encoding: UTF8_ENCODING
     })
 
-    console.log('Configuration file (pre-commit) created')
+    writeMessage({
+      type: 'info',
+      message: 'Configuration file (pre-commit) created successfully'
+    })
 
-    console.log('Modifying package.json')
+    writeMessage({
+      type: 'info',
+      message: 'Modifying package.json'
+    })
 
     await addScript({ key: 'prepare', value: 'husky', packageJsonPath })
 
-    console.log('Modified package.json')
-    console.log("Husky's configuration generated successfully")
+    writeMessage({
+      type: 'info',
+      message: 'Modified package.json'
+    })
+    writeMessage({
+      type: 'success',
+      message: "Husky's configuration generated successfully"
+    })
   } catch {
-    console.error(ErrorMessages.Husky)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('Husky')
+    })
     process.exit(1)
   }
 }

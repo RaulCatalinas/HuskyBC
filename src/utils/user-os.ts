@@ -2,16 +2,23 @@
 import fs from 'node:fs/promises'
 import process from 'node:process'
 
-// Constants
-import { ErrorMessages } from '@/constants/errors'
+// Utils
+import { writeMessage } from './console'
+import { getErrorMessage } from './errors'
+
+// Third-Party libraries
+import { exists as existsFolderOrFile } from 'fs-extra'
 
 export async function exists(path: string) {
   try {
-    await fs.access(path, fs.constants.F_OK)
+    return await existsFolderOrFile(path)
+  } catch {
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('CheckFileExists')
+    })
 
-    return true
-  } catch (err) {
-    return false
+    process.exit(1)
   }
 }
 
@@ -19,7 +26,12 @@ export async function createFolder(name: string) {
   try {
     await fs.mkdir(`${process.cwd()}/${name}`)
   } catch {
-    console.error(ErrorMessages.Default)
+    const errorMessage = getErrorMessage('CreateFolder')
+
+    writeMessage({
+      type: 'error',
+      message: errorMessage.replace('{folderName}', name)
+    })
     process.exit(1)
   }
 }

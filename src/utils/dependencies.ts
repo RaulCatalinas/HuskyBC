@@ -3,13 +3,16 @@ import type { PackageManager } from '@/types/package-manger'
 
 // Constants
 import { INSTALLATION_COMMANDS } from '@/constants/dependencies'
-import { ErrorMessages } from '@/constants/errors'
 
 // Third-Party libraries
 import promiseSpawn from '@npmcli/promise-spawn'
 
 // NodeJS
 import process from 'node:process'
+
+// Utils
+import { writeMessage } from './console'
+import { getErrorMessage } from './errors'
 
 interface Props {
   packageManagerToUse: PackageManager
@@ -23,16 +26,25 @@ export async function installDependencies({
   try {
     const installationCommand = INSTALLATION_COMMANDS[packageManagerToUse]
 
-    console.log(`Installing dependencies using: ${packageManagerToUse}...`)
+    writeMessage({
+      type: 'info',
+      message: `Installing dependencies using: ${packageManagerToUse}...`
+    })
 
     await promiseSpawn(
       packageManagerToUse,
       [installationCommand, packagesToInstall, '-D'].flat()
     )
 
-    console.log('Installed dependencies')
+    writeMessage({
+      type: 'success',
+      message: 'Dependencies installed successfully'
+    })
   } catch (error) {
-    console.error(ErrorMessages.Dependencies)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('Dependencies')
+    })
     process.exit(1)
   }
 }

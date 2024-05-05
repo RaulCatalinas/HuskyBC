@@ -7,16 +7,20 @@ import fs from 'node:fs/promises'
 // Constants
 import { COMMITLINT_CONFIG } from '@/constants/commitlint'
 import { UTF8_ENCODING } from '@/constants/encoding'
-import { ErrorMessages } from '@/constants/errors'
 
 // Utils
+import { writeMessage } from './console'
 import { installDependencies } from './dependencies'
+import { getErrorMessage } from './errors'
 
 export async function generateCommitlintConfig(
   packageManagerToUse: PackageManager
 ) {
   try {
-    console.log('Configuring commitlint...')
+    writeMessage({
+      type: 'config',
+      message: 'Configuring commitlint...'
+    })
 
     await installDependencies({
       packageManagerToUse,
@@ -27,7 +31,10 @@ export async function generateCommitlintConfig(
       ]
     })
 
-    console.log('Creating configuration files...')
+    writeMessage({
+      type: 'info',
+      message: 'Creating configuration files...'
+    })
 
     await Promise.all([
       fs.writeFile(
@@ -46,23 +53,33 @@ export async function generateCommitlintConfig(
       ),
       fs.writeFile(
         '.lintstagedrc',
-        `
+        JSON.stringify(
           {
-            "src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}": []
-          }      
-        `,
+            'src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}': []
+          },
+          null,
+          2
+        ),
         {
           encoding: UTF8_ENCODING
         }
       )
     ])
 
-    console.log(
-      'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created'
-    )
-    console.log("commitlint's configuration generated successfully")
+    writeMessage({
+      type: 'info',
+      message:
+        'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created'
+    })
+    writeMessage({
+      type: 'success',
+      message: "commitlint's configuration generated successfully"
+    })
   } catch (error) {
-    console.error(ErrorMessages.Commitlint)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('Commitlint')
+    })
     process.exit(1)
   }
 }

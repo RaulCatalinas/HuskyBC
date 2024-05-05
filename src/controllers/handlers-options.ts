@@ -1,5 +1,4 @@
 // Constants
-import { ErrorMessages } from '@/constants/errors'
 import { REPOSITORY } from '@/constants/github'
 
 // Third-Party libraries
@@ -8,6 +7,8 @@ import opener from 'opener'
 // Utils
 import { addCommitlint } from '@/utils/add-commitlint'
 import { generateCommitlintConfig } from '@/utils/commitlint'
+import { writeMessage } from '@/utils/console'
+import { getErrorMessage } from '@/utils/errors'
 import { generateHuskyConfig } from '@/utils/husky-library'
 import { getPackageManger } from '@/utils/package-managers'
 import { exists } from '@/utils/user-os'
@@ -22,7 +23,10 @@ export const handlerOptionBuild = async () => {
     const existPackageJsonInTheCurrentDirectory = await exists(packageJsonPath)
 
     if (!existPackageJsonInTheCurrentDirectory) {
-      console.error(ErrorMessages.NotFound)
+      writeMessage({
+        type: 'error',
+        message: getErrorMessage('NotFound')
+      })
 
       process.exit(1)
     }
@@ -36,13 +40,19 @@ export const handlerOptionBuild = async () => {
       await generateCommitlintConfig(packageManagerToUse)
     }
   } catch {
-    console.error(ErrorMessages.Default)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('Default')
+    })
     process.exit(1)
   }
 }
 
 export const handlerOptionCollaborate = () => {
-  console.log('Opening the GitHub repository...')
+  writeMessage({
+    type: 'info',
+    message: 'Opening the GitHub repository...'
+  })
 
   setTimeout(() => opener(REPOSITORY), 500)
 }

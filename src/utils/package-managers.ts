@@ -1,5 +1,4 @@
 // Constants
-import { ErrorMessages } from '@/constants/errors'
 import { PACKAGE_MANGERS } from '@/constants/package-mangers'
 
 // Third-Party libraries
@@ -10,6 +9,10 @@ import type { PackageManager } from '@/types/package-manger'
 
 // NodeJS
 import process from 'node:process'
+
+// Utils
+import { writeMessage } from './console'
+import { getErrorMessage } from './errors'
 
 export async function getPackageManger(): Promise<PackageManager> {
   try {
@@ -24,7 +27,10 @@ export async function getPackageManger(): Promise<PackageManager> {
 
     return packageManager
   } catch (error) {
-    console.error(ErrorMessages.Default)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('PackageManagerSelection')
+    })
     process.exit(1)
   }
 }

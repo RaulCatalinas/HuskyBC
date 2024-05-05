@@ -1,11 +1,12 @@
 // Third-Party libraries
 import inquirer from 'inquirer'
 
-// Constants
-import { ErrorMessages } from '@/constants/errors'
-
 // NodeJS
 import process from 'node:process'
+
+// Utils
+import { writeMessage } from './console'
+import { getErrorMessage } from './errors'
 
 export async function addCommitlint(): Promise<boolean> {
   try {
@@ -18,7 +19,10 @@ export async function addCommitlint(): Promise<boolean> {
 
     return addCommitlint
   } catch {
-    console.error(ErrorMessages.Default)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('CommitlintSelection')
+    })
     process.exit(1)
   }
 }

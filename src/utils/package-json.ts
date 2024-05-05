@@ -4,10 +4,13 @@ import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
-import { ErrorMessages } from '@/constants/errors'
 
 // Types
 import type { PackageJson } from '@/types/package-json'
+
+// Utils
+import { writeMessage } from './console'
+import { getErrorMessage } from './errors'
 
 interface Props {
   key: string
@@ -33,7 +36,10 @@ export async function addScript({ key, value, packageJsonPath }: Props) {
       }
     )
   } catch {
-    console.error(ErrorMessages.Default)
+    writeMessage({
+      type: 'error',
+      message: getErrorMessage('AddScript')
+    })
     process.exit(1)
   }
 }
