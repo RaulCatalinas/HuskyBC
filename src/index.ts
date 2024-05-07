@@ -3,11 +3,11 @@ import { configureCLI } from './config/cli'
 import { configureDefaultOption, configureOptions } from './config/options'
 
 // Constants
-import { program } from './constants/huskybc'
+import { huskybc } from './constants/huskybc'
 
 configureCLI()
 configureOptions()
 
-program.parse()
+huskybc.parse()
 
 configureDefaultOption()

@@ -1,5 +1,5 @@
 // Constants
-import { program } from '@/constants/huskybc'
+import { huskybc } from '@/constants/huskybc'
 
 // Controllers
 import {
@@ -8,7 +8,7 @@ import {
 } from '@/controllers/handlers-options'
 
 export function configureOptions() {
-  program
+  huskybc
     .option(
       '-co, --collaborate',
       'Open GitHub repository for collaboration',
@@ -18,10 +18,10 @@ export function configureOptions() {
 }
 
 export function configureDefaultOption() {
-  const options = program.opts()
+  const options = huskybc.opts()
 
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (!options.build && !options.collaborate && !options.b && !options.co) {
-    program.help()
+    huskybc.help()
   }
 }

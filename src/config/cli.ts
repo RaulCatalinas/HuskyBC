@@ -1,8 +1,8 @@
-import { program } from '@/constants/huskybc'
+import { huskybc } from '@/constants/huskybc'
 import { VERSION } from '@/constants/version'
 
 export function configureCLI() {
-  program
+  huskybc
     .description('Command line for easy Husky configuration')
     .version(VERSION)
     .showHelpAfterError()

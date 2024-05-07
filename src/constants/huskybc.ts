@@ -1,3 +1,3 @@
-import { createCommand } from 'commander'
+import { Command } from 'commander'
 
-export const program = createCommand('HuskyBC')
+export const huskybc = new Command('HuskyBC')
