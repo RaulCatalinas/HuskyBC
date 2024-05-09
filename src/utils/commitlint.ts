@@ -69,7 +69,7 @@ export async function generateCommitlintConfig(
     writeMessage({
       type: 'info',
       message:
-        'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created'
+        'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created successfully'
     })
     writeMessage({
       type: 'success',
