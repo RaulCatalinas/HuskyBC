@@ -58,10 +58,13 @@ export async function generateHuskyConfig({
 
     writeMessage({
       type: 'info',
-      message: 'Modifying package.json'
+      message: 'package.json modified successfully'
     })
 
-    await addScript({ key: 'prepare', value: 'husky', packageJsonPath })
+    await addScript({
+      packageJsonPath,
+      scriptsToAdd: { key: 'prepare', value: 'husky' }
+    })
 
     writeMessage({
       type: 'info',

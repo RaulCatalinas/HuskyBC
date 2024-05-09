@@ -12,10 +12,17 @@ import { UTF8_ENCODING } from '@/constants/encoding'
 import { writeMessage } from './console'
 import { installDependencies } from './dependencies'
 import { getErrorMessage } from './errors'
+import { addScript } from './package-json'
 
-export async function generateCommitlintConfig(
+interface Props {
   packageManagerToUse: PackageManager
-) {
+  packageJsonPath: string
+}
+
+export async function generateCommitlintConfig({
+  packageManagerToUse,
+  packageJsonPath
+}: Props) {
   try {
     writeMessage({
       type: 'config',
@@ -55,7 +62,10 @@ export async function generateCommitlintConfig(
         '.lintstagedrc',
         JSON.stringify(
           {
-            'src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}': []
+            'src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}': [
+              'prettier src --check',
+              'eslint src --max-warnings 0'
+            ]
           },
           null,
           2
@@ -65,6 +75,26 @@ export async function generateCommitlintConfig(
         }
       )
     ])
+
+    writeMessage({
+      type: 'info',
+      message: 'package.json modified successfully'
+    })
+
+    await addScript({
+      packageJsonPath,
+      scriptsToAdd: [
+        { key: 'lint', value: 'eslint src' },
+        { key: 'lint:fix', value: 'eslint src --fix' },
+        { key: 'format', value: 'prettier src --check' },
+        { key: 'format:write', value: 'prettier src --write' }
+      ]
+    })
+
+    writeMessage({
+      type: 'info',
+      message: 'Modified package.json'
+    })
 
     writeMessage({
       type: 'info',

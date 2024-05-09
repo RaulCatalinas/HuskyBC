@@ -37,7 +37,7 @@ export const handlerOptionBuild = async () => {
     await generateHuskyConfig({ packageManagerToUse, packageJsonPath })
 
     if (useCommitlint) {
-      await generateCommitlintConfig(packageManagerToUse)
+      await generateCommitlintConfig({ packageManagerToUse, packageJsonPath })
     }
   } catch {
     writeMessage({

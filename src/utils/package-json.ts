@@ -12,19 +12,43 @@ import type { PackageJson } from '@/types/package-json'
 import { writeMessage } from './console'
 import { getErrorMessage } from './errors'
 
-interface Props {
+interface PackageJsonScript {
   key: string
   value: string
-  packageJsonPath: string
 }
 
-export async function addScript({ key, value, packageJsonPath }: Props) {
+interface Props {
+  packageJsonPath: string
+  scriptsToAdd: PackageJsonScript | PackageJsonScript[]
+}
+
+export async function addScript({ scriptsToAdd, packageJsonPath }: Props) {
   try {
     const packageJsonData = await fs.readFile(packageJsonPath, {
       encoding: UTF8_ENCODING
     })
 
     const packageJsonObj: PackageJson = JSON.parse(packageJsonData)
+
+    const scriptsToAddIsAnArray = Array.isArray(scriptsToAdd)
+
+    if (scriptsToAddIsAnArray) {
+      for (const { key, value } of scriptsToAdd) {
+        packageJsonObj.scripts[key] = value
+      }
+
+      await fs.writeFile(
+        packageJsonPath,
+        JSON.stringify(packageJsonObj, null, 2),
+        {
+          encoding: UTF8_ENCODING
+        }
+      )
+
+      return
+    }
+
+    const { key, value } = scriptsToAdd
 
     packageJsonObj.scripts[key] = value
 
