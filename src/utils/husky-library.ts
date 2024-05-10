@@ -15,7 +15,7 @@ import process from 'node:process'
 
 // Constants
 import { UTF8_ENCODING } from '@/constants/encoding'
-import { HUSKY_CONFIG } from '@/constants/husky-library'
+import { LINT_STAGED_CONFIG } from '@/constants/lint-staged'
 
 interface Props {
   packageManagerToUse: PackageManager
@@ -53,7 +53,7 @@ export async function generateHuskyConfig({
     }
 
     const preCommitFileValue = useCommitlint
-      ? HUSKY_CONFIG[packageManagerToUse]
+      ? LINT_STAGED_CONFIG[packageManagerToUse]
       : `${packageManagerToUse} test`
 
     await fs.writeFile('.husky/pre-commit', preCommitFileValue, {
