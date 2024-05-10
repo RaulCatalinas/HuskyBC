@@ -18,9 +18,7 @@ export async function getPackageManger(): Promise<PackageManager> {
   try {
     const { packageManager } = await inquirer.prompt({
       type: 'rawlist',
-      choices: PACKAGE_MANGERS.filter(
-        packageManager => packageManager !== 'yarn'
-      ),
+      choices: PACKAGE_MANGERS,
       message: 'Which package manager do you wanna use?',
       name: 'packageManager'
     })
