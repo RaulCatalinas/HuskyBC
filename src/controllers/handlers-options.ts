@@ -10,6 +10,7 @@ import { generateCommitlintConfig } from '@/utils/commitlint'
 import { writeMessage } from '@/utils/console'
 import { getErrorMessage } from '@/utils/errors'
 import { generateHuskyConfig } from '@/utils/husky-library'
+import { shouldPublishToNPM } from '@/utils/npm'
 import { getPackageManger } from '@/utils/package-managers'
 import { exists } from '@/utils/user-os'
 
@@ -18,6 +19,8 @@ import process from 'node:process'
 
 export const handlerOptionBuild = async () => {
   try {
+    let shouldPublishToNpm = false
+
     const packageJsonPath = `${process.cwd()}/package.json`
 
     const existPackageJsonInTheCurrentDirectory = await exists(packageJsonPath)
@@ -32,9 +35,19 @@ export const handlerOptionBuild = async () => {
     }
 
     const packageManagerToUse = await getPackageManger()
+
+    if (packageManagerToUse === 'yarn') {
+      shouldPublishToNpm = await shouldPublishToNPM()
+    }
+
     const useCommitlint = await addCommitlint()
 
-    await generateHuskyConfig({ packageManagerToUse, packageJsonPath })
+    await generateHuskyConfig({
+      packageManagerToUse,
+      packageJsonPath,
+      useCommitlint,
+      shouldPublishToNpm
+    })
 
     if (useCommitlint) {
       await generateCommitlintConfig({ packageManagerToUse, packageJsonPath })

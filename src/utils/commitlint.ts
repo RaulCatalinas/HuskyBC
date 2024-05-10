@@ -78,7 +78,7 @@ export async function generateCommitlintConfig({
 
     writeMessage({
       type: 'info',
-      message: 'package.json modified successfully'
+      message: 'Modifying package.json...'
     })
 
     await addScript({
@@ -93,7 +93,7 @@ export async function generateCommitlintConfig({
 
     writeMessage({
       type: 'info',
-      message: 'Modified package.json'
+      message: 'package.json modified successfully'
     })
 
     writeMessage({

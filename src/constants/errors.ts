@@ -18,5 +18,7 @@ export const ERROR_MESSAGES = {
 
   CreateFolder: `An error occurred while creating the folder: {folderName}, please try again later, if the error persists, please report it on ${ISSUES}.`,
 
-  CheckFileExists: `An error occurred while checking if the file/folder exists, please try again later, if the error persists, please report it on ${ISSUES}.`
+  CheckFileExists: `An error occurred while checking if the file/folder exists, please try again later, if the error persists, please report it on ${ISSUES}.`,
+
+  PublishConfirmation: `An error occurred while confirming npm publication. Please try again later, if the error persists, please report it on ${ISSUES}.`
 } as const

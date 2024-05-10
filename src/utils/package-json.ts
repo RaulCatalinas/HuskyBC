@@ -6,16 +6,11 @@ import process from 'node:process'
 import { UTF8_ENCODING } from '@/constants/encoding'
 
 // Types
-import type { PackageJson } from '@/types/package-json'
+import type { PackageJson, PackageJsonScript } from '@/types/package-json'
 
 // Utils
 import { writeMessage } from './console'
 import { getErrorMessage } from './errors'
-
-interface PackageJsonScript {
-  key: string
-  value: string
-}
 
 interface Props {
   packageJsonPath: string

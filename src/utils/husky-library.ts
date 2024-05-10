@@ -1,4 +1,5 @@
 // Types
+import type { PackageJsonScript } from '@/types/package-json'
 import type { PackageManager } from '@/types/package-manger'
 
 // Utils
@@ -19,11 +20,15 @@ import { HUSKY_CONFIG } from '@/constants/husky-library'
 interface Props {
   packageManagerToUse: PackageManager
   packageJsonPath: string
+  useCommitlint: boolean
+  shouldPublishToNpm: boolean
 }
 
 export async function generateHuskyConfig({
   packageManagerToUse,
-  packageJsonPath
+  packageJsonPath,
+  useCommitlint,
+  shouldPublishToNpm
 }: Props) {
   try {
     writeMessage({
@@ -47,7 +52,11 @@ export async function generateHuskyConfig({
       await createFolder('.husky')
     }
 
-    await fs.writeFile('.husky/pre-commit', HUSKY_CONFIG[packageManagerToUse], {
+    const preCommitFileValue = useCommitlint
+      ? HUSKY_CONFIG[packageManagerToUse]
+      : `${packageManagerToUse} test`
+
+    await fs.writeFile('.husky/pre-commit', preCommitFileValue, {
       encoding: UTF8_ENCODING
     })
 
@@ -58,17 +67,31 @@ export async function generateHuskyConfig({
 
     writeMessage({
       type: 'info',
-      message: 'package.json modified successfully'
+      message: 'Modifying package.json...'
     })
+
+    const huskyScriptsForYarn: PackageJsonScript | PackageJsonScript[] =
+      !shouldPublishToNpm
+        ? { key: 'postinstall', value: 'husky' }
+        : [
+            { key: 'postinstall', value: 'husky' },
+            { key: 'prepack', value: 'pinst --disable' },
+            { key: 'postpack', value: 'pinst --enable' }
+          ]
+
+    const scriptsToAdd: PackageJsonScript | PackageJsonScript[] =
+      packageManagerToUse !== 'yarn'
+        ? { key: 'prepare', value: 'husky' }
+        : huskyScriptsForYarn
 
     await addScript({
       packageJsonPath,
-      scriptsToAdd: { key: 'prepare', value: 'husky' }
+      scriptsToAdd
     })
 
     writeMessage({
       type: 'info',
-      message: 'Modified package.json'
+      message: 'package.json modified successfully'
     })
     writeMessage({
       type: 'success',
