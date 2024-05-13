@@ -11,8 +11,8 @@ import type { PackageManager } from '@/types/package-manger'
 import process from 'node:process'
 
 // Utils
-import { writeMessage } from './console'
-import { getErrorMessage } from './errors'
+import { writeMessage } from '@/utils/console'
+import { getErrorMessage } from '@/utils/errors'
 
 export async function getPackageManger(): Promise<PackageManager> {
   try {

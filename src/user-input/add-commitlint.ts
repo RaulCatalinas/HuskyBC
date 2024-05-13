@@ -5,8 +5,8 @@ import inquirer from 'inquirer'
 import process from 'node:process'
 
 // Utils
-import { writeMessage } from './console'
-import { getErrorMessage } from './errors'
+import { writeMessage } from '@/utils/console'
+import { getErrorMessage } from '@/utils/errors'
 
 export async function addCommitlint(): Promise<boolean> {
   try {

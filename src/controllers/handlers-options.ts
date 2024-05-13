@@ -5,17 +5,19 @@ import { REPOSITORY } from '@/constants/github'
 import opener from 'opener'
 
 // Utils
-import { addCommitlint } from '@/utils/add-commitlint'
 import { generateCommitlintConfig } from '@/utils/commitlint'
 import { writeMessage } from '@/utils/console'
 import { getErrorMessage } from '@/utils/errors'
 import { generateHuskyConfig } from '@/utils/husky-library'
-import { shouldPublishToNPM } from '@/utils/npm'
-import { getPackageManger } from '@/utils/package-managers'
 import { exists } from '@/utils/user-os'
 
 // NodeJS
 import process from 'node:process'
+
+// User-Input
+import { addCommitlint } from '@/user-input/add-commitlint'
+import { shouldPublishToNPM } from '@/user-input/npm'
+import { getPackageManger } from '@/user-input/package-managers'
 
 export const handlerOptionBuild = async () => {
   try {
