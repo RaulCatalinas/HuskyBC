@@ -20,5 +20,9 @@ export const ERROR_MESSAGES = {
 
   CheckFileExists: `An error occurred while checking if the file/folder exists, please try again later, if the error persists, please report it on ${ISSUES}.`,
 
-  PublishConfirmation: `An error occurred while confirming npm publication. Please try again later, if the error persists, please report it on ${ISSUES}.`
+  PublishConfirmation: `An error occurred while confirming npm publication. Please try again later, if the error persists, please report it on ${ISSUES}.`,
+
+  CheckSection: `An error occurred while checking for a section in package.json. Please try again later, if the error persists, please report it on ${ISSUES}.`,
+
+  CreateSection: `An error occurred while creating a section in package.json. Please try again later, if the error persists, please report it on ${ISSUES}.`
 } as const
