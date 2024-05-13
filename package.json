@@ -23,7 +23,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@types/bun": "1.1.1",
+    "@types/bun": "1.1.2",
     "@types/fs-extra": "11.0.4",
     "@types/inquirer": "9.0.7",
     "@types/npmcli__promise-spawn": "6.0.3",
