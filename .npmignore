@@ -10,3 +10,4 @@ tsconfig.json
 bun.lockb
 .github
 CONTRIBUTING.md
+src
