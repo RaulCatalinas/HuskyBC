@@ -6,21 +6,18 @@ HuskyBC is a command line for easy Husky configuration
 
 1. Install the CLI
 
-| Package Manager | Installation Command |
-| --- | --- |
-| npm | `npm install -g huskybc` |
-| pnpm | `pnpm add -g huskybc` |
-| yarn | `yarn add -g huskybc` |
-| bun | `bun add -g huskybc` |
+| Package Manager | Installation Command     |
+| --------------- | ------------------------ |
+| npm             | `npm install -g huskybc` |
+| pnpm            | `pnpm add -g huskybc`    |
+| yarn            | `yarn add -g huskybc`    |
+| bun             | `bun add -g huskybc`     |
 
 2. Run the CLI
 
-| Package Manager | Execution Command |
-| --- | --- |
-| npm | `npx huskybc` |
-| pnpm | `pnpm dlx huskybc` |
-| yarn | `yarn dlx huskybc` |
-| bun | `bunx huskybc` |
+```bash
+huskybc
+```
 
 ## Feedback
 
