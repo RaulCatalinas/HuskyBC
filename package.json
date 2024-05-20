@@ -34,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "esbuild": "0.21.2",
     "eslint": "^8.0.1",
-    "eslint-config-love": "47.0.0",
+    "eslint-config-love": "48.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
