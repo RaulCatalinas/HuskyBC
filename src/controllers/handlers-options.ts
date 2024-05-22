@@ -21,8 +21,6 @@ import { getPackageManger } from '@/user-input/package-managers'
 
 export const handlerOptionBuild = async () => {
   try {
-    let shouldPublishToNpm = false
-
     const packageJsonPath = `${process.cwd()}/package.json`
 
     const existPackageJsonInTheCurrentDirectory = await exists(packageJsonPath)
@@ -38,9 +36,7 @@ export const handlerOptionBuild = async () => {
 
     const packageManagerToUse = await getPackageManger()
 
-    if (packageManagerToUse === 'yarn') {
-      shouldPublishToNpm = await shouldPublishToNPM()
-    }
+    const shouldPublishToNpm = await shouldPublishToNPM()
 
     const useCommitlint = await addCommitlint()
 
@@ -52,7 +48,11 @@ export const handlerOptionBuild = async () => {
     })
 
     if (useCommitlint) {
-      await generateCommitlintConfig({ packageManagerToUse, packageJsonPath })
+      await generateCommitlintConfig({
+        packageManagerToUse,
+        packageJsonPath,
+        shouldPublishToNpm
+      })
     }
   } catch {
     writeMessage({

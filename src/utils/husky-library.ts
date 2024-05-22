@@ -6,6 +6,7 @@ import type { PackageManager } from '@/types/package-manger'
 import { writeMessage } from './console'
 import { installDependencies } from './dependencies'
 import { getErrorMessage } from './errors'
+import { modifyNpmIgnore } from './npm'
 import { addScript } from './package-json'
 import { createFolder, exists } from './user-os'
 
@@ -24,6 +25,12 @@ interface Props {
   shouldPublishToNpm: boolean
 }
 
+type AddNecessaryScriptsToPackageJsonProps = Omit<Props, 'useCommitlint'>
+type CreateHuskyConfigFiles = Pick<
+  Props,
+  'packageManagerToUse' | 'useCommitlint'
+>
+
 export async function generateHuskyConfig({
   packageManagerToUse,
   packageJsonPath,
@@ -36,63 +43,25 @@ export async function generateHuskyConfig({
       message: "Generating Husky's configuration..."
     })
 
-    await installDependencies({
-      packageManagerToUse,
-      packagesToInstall: 'husky'
-    })
+    await Promise.all(
+      [
+        installDependencies({
+          packageManagerToUse,
+          packagesToInstall: 'husky'
+        }),
 
-    writeMessage({
-      type: 'info',
-      message: 'Creating configuration file...'
-    })
+        createHuskyConfigFiles({ packageManagerToUse, useCommitlint }),
 
-    const existsHuskyFolder = await exists(`${process.cwd()}/.husky`)
+        addNecessaryScriptsToPackageJson({
+          packageJsonPath,
+          packageManagerToUse,
+          shouldPublishToNpm
+        }),
 
-    if (!existsHuskyFolder) {
-      await createFolder('.husky')
-    }
+        shouldPublishToNpm ? modifyNpmIgnore('.husky') : null
+      ].filter(promise => promise != null)
+    )
 
-    const preCommitFileValue = useCommitlint
-      ? LINT_STAGED_CONFIG[packageManagerToUse]
-      : `${packageManagerToUse} test`
-
-    await fs.writeFile('.husky/pre-commit', preCommitFileValue, {
-      encoding: UTF8_ENCODING
-    })
-
-    writeMessage({
-      type: 'info',
-      message: 'Configuration file (pre-commit) created successfully'
-    })
-
-    writeMessage({
-      type: 'info',
-      message: 'Modifying package.json...'
-    })
-
-    const huskyScriptsForYarn: PackageJsonScript | PackageJsonScript[] =
-      !shouldPublishToNpm
-        ? { key: 'postinstall', value: 'husky' }
-        : [
-            { key: 'postinstall', value: 'husky' },
-            { key: 'prepack', value: 'pinst --disable' },
-            { key: 'postpack', value: 'pinst --enable' }
-          ]
-
-    const scriptsToAdd: PackageJsonScript | PackageJsonScript[] =
-      packageManagerToUse !== 'yarn'
-        ? { key: 'prepare', value: 'husky' }
-        : huskyScriptsForYarn
-
-    await addScript({
-      packageJsonPath,
-      scriptsToAdd
-    })
-
-    writeMessage({
-      type: 'info',
-      message: 'package.json modified successfully'
-    })
     writeMessage({
       type: 'success',
       message: "Husky's configuration generated successfully"
@@ -102,6 +71,71 @@ export async function generateHuskyConfig({
       type: 'error',
       message: getErrorMessage('Husky')
     })
+
     process.exit(1)
   }
+}
+
+async function createHuskyConfigFiles({
+  packageManagerToUse,
+  useCommitlint
+}: CreateHuskyConfigFiles) {
+  writeMessage({
+    type: 'info',
+    message: 'Creating configuration file...'
+  })
+
+  const existsHuskyFolder = await exists(`${process.cwd()}/.husky`)
+
+  if (!existsHuskyFolder) {
+    await createFolder('.husky')
+  }
+
+  const preCommitFileValue = useCommitlint
+    ? LINT_STAGED_CONFIG[packageManagerToUse]
+    : `${packageManagerToUse} test`
+
+  await fs.writeFile('.husky/pre-commit', preCommitFileValue, {
+    encoding: UTF8_ENCODING
+  })
+
+  writeMessage({
+    type: 'info',
+    message: 'Configuration file (pre-commit) created successfully'
+  })
+}
+
+async function addNecessaryScriptsToPackageJson({
+  packageJsonPath,
+  packageManagerToUse,
+  shouldPublishToNpm
+}: AddNecessaryScriptsToPackageJsonProps) {
+  writeMessage({
+    type: 'info',
+    message: 'Modifying package.json...'
+  })
+
+  const huskyScriptsForYarn: PackageJsonScript | PackageJsonScript[] =
+    !shouldPublishToNpm
+      ? { key: 'postinstall', value: 'husky' }
+      : [
+          { key: 'postinstall', value: 'husky' },
+          { key: 'prepack', value: 'pinst --disable' },
+          { key: 'postpack', value: 'pinst --enable' }
+        ]
+
+  const scriptsToAdd: PackageJsonScript | PackageJsonScript[] =
+    packageManagerToUse !== 'yarn'
+      ? { key: 'prepare', value: 'husky' }
+      : huskyScriptsForYarn
+
+  await addScript({
+    packageJsonPath,
+    scriptsToAdd
+  })
+
+  writeMessage({
+    type: 'info',
+    message: 'package.json modified successfully'
+  })
 }

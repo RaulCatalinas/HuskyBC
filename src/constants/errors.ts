@@ -24,5 +24,9 @@ export const ERROR_MESSAGES = {
 
   CheckSection: `An error occurred while checking for a section in package.json. Please try again later, if the error persists, please report it on ${ISSUES}.`,
 
-  CreateSection: `An error occurred while creating a section in package.json. Please try again later, if the error persists, please report it on ${ISSUES}.`
+  CreateSection: `An error occurred while creating a section in package.json. Please try again later, if the error persists, please report it on ${ISSUES}.`,
+
+  NpmIgnoreWrite: `An error occurred while writing to the '.npmignore' file. Please try again later, if the error persists please report it on ${ISSUES}.`,
+
+  EmptyFileCreate: `An error occurred while creating the empty file: {fileName}. Please try again later, if the error persists please report it on ${ISSUES}.`
 } as const
