@@ -12,26 +12,26 @@ import type { PackageJson, PackageJsonScript } from '@/types/package-json'
 import { writeMessage } from './console'
 import { getErrorMessage } from './errors'
 
-interface AddScriptProps {
+interface Props {
   packageJsonPath: string
   scriptsToAdd: PackageJsonScript | PackageJsonScript[]
 }
 
-interface ExistsSectionProps {
-  packageJsonPath: string
+type ExistsSectionProps = Pick<Props, 'packageJsonPath'> & {
   sectionToCheck: string
 }
 
-interface CreateEmptySectionProps {
-  packageJsonPath: string
+type CreateEmptySectionProps = Pick<Props, 'packageJsonPath'> & {
   sectionToCreate: string
 }
 
-export async function addScript({
-  scriptsToAdd,
-  packageJsonPath
-}: AddScriptProps) {
+export async function addScript({ scriptsToAdd, packageJsonPath }: Props) {
   try {
+    writeMessage({
+      type: 'info',
+      message: 'Modifying package.json...'
+    })
+
     const existsScriptsSection = await existsSection({
       packageJsonPath,
       sectionToCheck: 'scripts'
@@ -76,6 +76,11 @@ export async function addScript({
         encoding: UTF8_ENCODING
       }
     )
+
+    writeMessage({
+      type: 'success',
+      message: 'package.json modified successfully'
+    })
   } catch {
     writeMessage({
       type: 'error',

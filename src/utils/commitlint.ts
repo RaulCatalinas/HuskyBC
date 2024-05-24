@@ -43,7 +43,15 @@ export async function generateCommitlintConfig({
           ]
         }),
 
-        addNecessaryScriptsToPackageJson(packageJsonPath),
+        addScript({
+          packageJsonPath,
+          scriptsToAdd: [
+            { key: 'lint', value: 'eslint src' },
+            { key: 'lint:fix', value: 'eslint src --fix' },
+            { key: 'format', value: 'prettier src --check' },
+            { key: 'format:write', value: 'prettier src --write' }
+          ]
+        }),
 
         createCommitlintConfigFiles(packageManagerToUse),
 
@@ -105,30 +113,8 @@ async function createCommitlintConfigFiles(
   ])
 
   writeMessage({
-    type: 'info',
+    type: 'success',
     message:
       'Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created successfully'
-  })
-}
-
-async function addNecessaryScriptsToPackageJson(packageJsonPath: string) {
-  writeMessage({
-    type: 'info',
-    message: 'Modifying package.json...'
-  })
-
-  await addScript({
-    packageJsonPath,
-    scriptsToAdd: [
-      { key: 'lint', value: 'eslint src' },
-      { key: 'lint:fix', value: 'eslint src --fix' },
-      { key: 'format', value: 'prettier src --check' },
-      { key: 'format:write', value: 'prettier src --write' }
-    ]
-  })
-
-  writeMessage({
-    type: 'info',
-    message: 'package.json modified successfully'
   })
 }

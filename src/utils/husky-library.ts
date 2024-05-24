@@ -100,7 +100,7 @@ async function createHuskyConfigFiles({
   })
 
   writeMessage({
-    type: 'info',
+    type: 'success',
     message: 'Configuration file (pre-commit) created successfully'
   })
 }
@@ -110,11 +110,6 @@ async function addNecessaryScriptsToPackageJson({
   packageManagerToUse,
   shouldPublishToNpm
 }: AddNecessaryScriptsToPackageJsonProps) {
-  writeMessage({
-    type: 'info',
-    message: 'Modifying package.json...'
-  })
-
   const huskyScriptsForYarn: PackageJsonScript | PackageJsonScript[] =
     !shouldPublishToNpm
       ? { key: 'postinstall', value: 'husky' }
@@ -132,10 +127,5 @@ async function addNecessaryScriptsToPackageJson({
   await addScript({
     packageJsonPath,
     scriptsToAdd
-  })
-
-  writeMessage({
-    type: 'info',
-    message: 'package.json modified successfully'
   })
 }
