@@ -1,10 +1,10 @@
 {
   "name": "huskybc",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "type": "module",
   "version": "1.0.0",
   "bin": {
-    "huskybc": "dist/index.js"
+    "huskybc": "dist/index.cjs"
   },
   "scripts": {
     "prepare": "husky",
@@ -12,7 +12,7 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier src --check",
     "format:write": "prettier src --write",
-    "build": "esbuild --minify --bundle --format=esm --platform=node --outfile=dist/index.js --packages=external src/index.ts",
+    "build": "vite build",
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
@@ -32,7 +32,6 @@
     "@types/inquirer": "9.0.7",
     "@types/npmcli__promise-spawn": "6.0.3",
     "@types/opener": "1.4.3",
-    "esbuild": "0.21.4",
     "eslint": "^8.0.1",
     "eslint-config-love": "51.0.1",
     "eslint-config-prettier": "9.1.0",
@@ -41,7 +40,9 @@
     "lint-staged": "15.2.5",
     "markdownlint": "0.34.0",
     "prettier": "3.2.5",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "vite": "5.2.12",
+    "vite-tsconfig-paths": "4.3.2"
   },
   "contributors": [
     {

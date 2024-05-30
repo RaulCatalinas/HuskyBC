@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Config
 import { configureCLI } from './config/cli'
 import { configureDefaultOption, configureOptions } from './config/options'
