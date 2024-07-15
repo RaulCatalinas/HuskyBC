@@ -20,7 +20,7 @@
     "chalk": "5.3.0",
     "commander": "12.1.0",
     "fs-extra": "11.2.0",
-    "inquirer": "10.0.0",
+    "inquirer": "10.0.1",
     "opener": "1.5.2"
   },
   "devDependencies": {
