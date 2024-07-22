@@ -1,38 +1,29 @@
 package config
 
 import (
-	"fmt"
 	"os"
 
+	"github.com/RaulCatalinas/HuskyBC/internal/cli"
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/handlers"
 )
 
-func printOptions() {
-	fmt.Print("Usage: HuskyBC [options]\n\n")
-	fmt.Print("Command line for easy Husky configuration\n\n")
-	fmt.Println("Options:")
-	fmt.Printf("%s \t%s \tOutput the version number\n", constants.OPTION_VERSION, constants.OPTION_VERSION_SORT)
-	fmt.Printf("%s \t%s \tOpen GitHub repository for collaboration\n", constants.OPTION_COLLABORATE, constants.OPTION_COLLABORATE_SORT)
-	fmt.Printf("%s \t%s \tStart Husky's configuration\n", constants.OPTION_BUILD, constants.OPTION_BUILD_SORT)
-	fmt.Printf("%s  \t%s \tDisplay help for command\n\n", constants.OPTION_HELP, constants.OPTION_HELP_SORT)
-}
-
 func ConfigureOptions() {
 	if len(os.Args) != 2 {
-		printOptions()
+		cli.ShowHelp()
 		os.Exit(0)
 	}
+
 	switch os.Args[1] {
-	case constants.OPTION_COLLABORATE_SORT, constants.OPTION_COLLABORATE:
+	case constants.Options[1].Option, constants.Options[1].Alias:
 		handlers.HandlerOptionCollaborate()
-	case constants.OPTION_BUILD_SORT, constants.OPTION_BUILD:
+	case constants.Options[2].Option, constants.Options[2].Alias:
 		handlers.HandlerOptionBuild()
-	case constants.OPTION_VERSION_SORT, constants.OPTION_VERSION:
-		fmt.Println("HuskyBC ->", constants.VERSION)
-	case constants.OPTION_HELP_SORT, constants.OPTION_HELP:
-		printOptions()
+	case constants.Options[0].Option, constants.Options[0].Alias:
+		cli.ShowVersion()
+	case constants.Options[3].Option, constants.Options[3].Alias:
+		cli.ShowHelp()
 	default:
-		printOptions()
+		cli.ShowHelp()
 	}
 }

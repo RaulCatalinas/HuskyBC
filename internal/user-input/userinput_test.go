@@ -77,7 +77,7 @@ func TestGetPackageManager(t *testing.T) {
 	// Imprimimos la salida del código principal para referencia
 	t.Logf("Output of GetPackageManager: %q", bufOut.String())
 
-	expectedPackageManager := constants.PNPM
+	expectedPackageManager := constants.PACKAGE_MANAGERS[2]
 	if selectedPackageManager != expectedPackageManager {
 		t.Errorf("Expected package manager %q, but got %q", expectedPackageManager, selectedPackageManager)
 	}

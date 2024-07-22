@@ -8,7 +8,7 @@ import (
 )
 
 func PrintListPackageManeger() {
-	for index, packageManager := range constants.PACKAGEMANAGERS {
+	for index, packageManager := range constants.PACKAGE_MANAGERS {
 		if _, err := fmt.Printf("%d. %s\n", index, packageManager); err != nil {
 			log.Fatalln(err)
 		}
@@ -32,7 +32,7 @@ func GetPackageManager() string {
 		log.Fatalln(err)
 	}
 
-	if len(constants.PACKAGEMANAGERS) <= selectedPackageManagerNumber {
+	if len(constants.PACKAGE_MANAGERS) <= selectedPackageManagerNumber {
 		if _, err := fmt.Println(">> Please enter a valid index"); err != nil {
 			log.Fatalln(err)
 		}
@@ -40,7 +40,7 @@ func GetPackageManager() string {
 		return GetPackageManager()
 	}
 
-	selectedPackageManager := constants.PACKAGEMANAGERS[selectedPackageManagerNumber]
+	selectedPackageManager := constants.PACKAGE_MANAGERS[selectedPackageManagerNumber]
 
 	return selectedPackageManager
 }
