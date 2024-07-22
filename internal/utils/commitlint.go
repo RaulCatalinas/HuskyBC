@@ -5,10 +5,11 @@ import (
 	"sync"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
+	"github.com/RaulCatalinas/HuskyBC/internal/types"
 )
 
 type CommitlintProps struct {
-	PackageManagerToUse string
+	PackageManagerToUse types.PackageManager
 	PackageJsonPath     string
 	ShouldPublishToNpm  bool
 }
@@ -45,7 +46,7 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 	WriteMessage("success", "commitlint's configuration generated successfully")
 }
 
-func createCommitlintConfigFiles(packageManagerToUse string) {
+func createCommitlintConfigFiles(packageManagerToUse types.PackageManager) {
 	WriteMessage("info", "Creating configuration files...")
 
 	var wg sync.WaitGroup
@@ -53,7 +54,7 @@ func createCommitlintConfigFiles(packageManagerToUse string) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		writeFile(".husky/commit-msg", []byte(constants.COMMITLINT_CONFIG[packageManagerToUse]))
+		writeFile(".husky/commit-msg", []byte(constants.COMMITLINT_CONFIG[string(packageManagerToUse)]))
 	}()
 
 	wg.Add(1)
@@ -67,11 +68,11 @@ func createCommitlintConfigFiles(packageManagerToUse string) {
 	go func() {
 		defer wg.Done()
 		content := `{
-  "src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}": [
-    "prettier src --check",
-    "eslint src --max-warnings 0"
-  ]
-}`
+			"src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}": [
+				"prettier src --check",
+				"eslint src --max-warnings 0"
+			]
+		}`
 		writeFile(".lintstagedrc", []byte(content))
 	}()
 

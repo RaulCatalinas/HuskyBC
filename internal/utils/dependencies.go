@@ -6,10 +6,11 @@ import (
 	"os/exec"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
+	"github.com/RaulCatalinas/HuskyBC/internal/types"
 )
 
 type InstallProps struct {
-	PackageManagerToUse string
+	PackageManagerToUse types.PackageManager
 	PackagesToInstall   []string
 }
 
@@ -30,7 +31,7 @@ func InstallDependencies(props InstallProps) {
 		}
 	}()
 
-	installationCommand, exists := constants.INSTALLATION_COMMANDS[props.PackageManagerToUse]
+	installationCommand, exists := constants.INSTALLATION_COMMANDS[types.PackageManager(props.PackageManagerToUse)]
 	if !exists {
 		WriteMessage("error", "Invalid package manager")
 		os.Exit(1)
@@ -48,7 +49,7 @@ func InstallDependencies(props InstallProps) {
 		el problema viene desde el mismo bun
 	*/
 	args := append([]string{installationCommand}, append(props.PackagesToInstall, "-D")...)
-	err := promiseSpawn(props.PackageManagerToUse, args)
+	err := promiseSpawn(string(props.PackageManagerToUse), args)
 	if err != nil {
 		WriteMessage("error", GetErrorMessage(err.Error()))
 		os.Exit(1)

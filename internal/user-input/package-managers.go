@@ -1,46 +1,38 @@
 package userinput
 
 import (
-	"fmt"
-	"log"
+	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
+	"github.com/RaulCatalinas/HuskyBC/internal/types"
+	"github.com/RaulCatalinas/HuskyBC/internal/utils"
+
+	"github.com/AlecAivazis/survey/v2"
 )
 
-func PrintListPackageManeger() {
-	for index, packageManager := range constants.PACKAGEMANAGERS {
-		if _, err := fmt.Printf("%d. %s\n", index, packageManager); err != nil {
-			log.Fatalln(err)
-		}
-	}
-}
-
-func GetPackageManager() string {
-	var selectedPackageManagerNumber int
-
-	if _, err := fmt.Println("Which package manager do you wanna use?"); err != nil {
-		log.Fatalln(err)
+func GetPackageManager() types.PackageManager {
+	var questions = []*survey.Question{
+		{
+			Name: "packageManger",
+			Prompt: &survey.Select{
+				Options: constants.PACKAGE_MANAGERS,
+				Message: "Which package manager do you wanna use?",
+				Default: "npm",
+			},
+		},
 	}
 
-	PrintListPackageManeger()
+	answers := struct {
+		PackageManager string `survey:"packageManger"`
+	}{}
 
-	if _, err := fmt.Print("Answer: "); err != nil {
-		log.Fatalln(err)
+	err := survey.Ask(questions, &answers)
+
+	if err != nil {
+		utils.WriteMessage("error", utils.GetErrorMessage("PackageManagerSelection"))
+
+		os.Exit(1)
 	}
 
-	if _, err := fmt.Scan(&selectedPackageManagerNumber); err != nil {
-		log.Fatalln(err)
-	}
-
-	if len(constants.PACKAGEMANAGERS) <= selectedPackageManagerNumber {
-		if _, err := fmt.Println(">> Please enter a valid index"); err != nil {
-			log.Fatalln(err)
-		}
-
-		return GetPackageManager()
-	}
-
-	selectedPackageManager := constants.PACKAGEMANAGERS[selectedPackageManagerNumber]
-
-	return selectedPackageManager
+	return types.PackageManager(answers.PackageManager)
 }
