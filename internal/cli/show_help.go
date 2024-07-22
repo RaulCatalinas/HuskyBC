@@ -2,11 +2,12 @@ package cli
 
 import (
 	"fmt"
+
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 )
 
 func ShowHelp() {
-	fmt.Print("Usage: HuskyBC [options]\n\n")
+	fmt.Print("Usage: huskybc [options]\n\n")
 	fmt.Print("Command line for easy Husky configuration\n\n")
 	fmt.Println("Options:")
 
