@@ -2,10 +2,11 @@ package utils
 
 import (
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
+	"github.com/RaulCatalinas/HuskyBC/internal/types"
 )
 
 type Props struct {
-	PackageManagerToUse string
+	PackageManagerToUse types.PackageManager
 	PackageJsonPath     string
 	UseCommitlint       bool
 	ShouldPublishToNpm  bool
@@ -27,16 +28,16 @@ func GenerateHuskyConfig(props Props) {
 	WriteMessage("success", "Husky's configuration generated successfully")
 }
 
-func createHuskyConfigFiles(packageManagerToUse string, useCommitlint bool) {
+func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitlint bool) {
 	WriteMessage("info", "Creating configuration file...")
 
 	CheckinFolderOrFile(constants.PATH_DIR_HUSKY, true)
 
 	var preCommitFileValue string
 	if useCommitlint {
-		preCommitFileValue = constants.LINT_STAGED_CONFIG[packageManagerToUse]
+		preCommitFileValue = constants.LINT_STAGED_CONFIG[types.PackageManager(packageManagerToUse)]
 	} else {
-		preCommitFileValue = packageManagerToUse + "test"
+		preCommitFileValue = string(packageManagerToUse) + "test"
 	}
 
 	writeFile(constants.PATH_DIR_HUSKY+"/pre-commit", []byte(preCommitFileValue))
@@ -49,7 +50,7 @@ type packageJsonScript struct {
 	Value string
 }
 
-func addNecessaryScriptsToPakageJson(packaJsonPath string, packageManagerToUse string, sholdPublishToNpm bool) {
+func addNecessaryScriptsToPakageJson(packaJsonPath string, packageManagerToUse types.PackageManager, sholdPublishToNpm bool) {
 	WriteMessage("info", "Add necessary scripts to "+packaJsonPath)
 
 	var huskyScriptsForYarn interface{}

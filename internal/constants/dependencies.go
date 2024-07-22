@@ -1,6 +1,8 @@
 package constants
 
-var INSTALLATION_COMMANDS = map[string]string{
+import "github.com/RaulCatalinas/HuskyBC/internal/types"
+
+var INSTALLATION_COMMANDS = map[types.PackageManager]string{
 	"npm":  "install",
 	"yarn": "add",
 	"pnpm": "add",
