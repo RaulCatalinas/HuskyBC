@@ -27,18 +27,10 @@ func createFile(name string) {
 	})
 }
 
-func CheckinFolderOrFile(path string, folder bool) {
+func CheckinFolderOrFile(path string, isFolder bool) {
 	_, err := os.Stat(path)
 
 	if err != nil {
-		var folderType string
-
-		if folder {
-			folderType = "folder"
-		} else {
-			folderType = "file"
-		}
-
 		WriteMessage(WriteMessageProps{
 			Type:    "error",
 			Message: GetErrorMessage("CheckingFolderOrFile"),
@@ -52,7 +44,7 @@ func CheckinFolderOrFile(path string, folder bool) {
 				Message: strings.Replace(errorMessage, "{fileName}", path, -1),
 			})
 
-			if folder {
+			if isFolder {
 				createFolder(path)
 			} else {
 				createFile(path)
