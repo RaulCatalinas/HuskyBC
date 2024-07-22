@@ -2,18 +2,9 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"os"
+	"strings"
 )
-
-func GetErrorMessage(context string) string {
-	return fmt.Sprintf("Error in %s", context)
-}
-
-func WriteMessage(messageType string, message string) {
-	log.Printf("[%s] %s", messageType, message)
-}
 
 func exists(filePath string) bool {
 	_, err := os.Stat(filePath)
@@ -23,8 +14,13 @@ func exists(filePath string) bool {
 
 func createEmptyFile(fileName string) {
 	file, err := os.Create(fileName)
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage("CreateFile"))
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("CreateEmptyFile"),
+		})
+
 		os.Exit(1)
 	}
 	defer file.Close()
@@ -32,8 +28,15 @@ func createEmptyFile(fileName string) {
 
 func readFile(filename string) []byte {
 	dataByte, err := os.ReadFile(filename)
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage("Read file "+filename))
+		errorMessage := GetErrorMessage("ReadFile")
+
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: strings.Replace(errorMessage, "{fileName}", filename, -1),
+		})
+
 		os.Exit(1)
 	}
 
@@ -42,15 +45,26 @@ func readFile(filename string) []byte {
 
 func writeFile(filename string, newData []byte) {
 	err := os.WriteFile(filename, newData, 0644)
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage("Write file "+filename))
+		errorMessage := GetErrorMessage("WriteFile")
+
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: strings.Replace(errorMessage, "{fileName}", filename, -1),
+		})
 	}
 }
 
 func jsonMarshalIndent(packageJsonObj map[string]interface{}) []byte {
 	newData, err := json.MarshalIndent(packageJsonObj, "", "  ")
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage("Json marshal indent"))
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("JsonMarshal"),
+		})
+
 		os.Exit(1)
 	}
 
@@ -61,8 +75,13 @@ func jsonUnmarshal(data []byte) map[string]interface{} {
 	var packageJsonObj map[string]interface{}
 
 	err := json.Unmarshal(data, &packageJsonObj)
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage("Json unmarshal"))
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("JsonUnmarshal"),
+		})
+
 		os.Exit(1)
 	}
 

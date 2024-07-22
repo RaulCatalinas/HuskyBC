@@ -11,14 +11,21 @@ import (
 )
 
 func HandlerOptionCollaborate() {
-	utils.WriteMessage("info", "Opening the GitHub repository...")
+	utils.WriteMessage(utils.WriteMessageProps{
+		Type:    "info",
+		Message: "Opening the GitHub repository...",
+	})
 
 	time.Sleep(5 * time.Millisecond)
 
 	err := webbrowser.Open(constants.REPOSITORY)
 
 	if err != nil {
-		utils.WriteMessage("error", utils.GetErrorMessage("Open webbrowser"))
+		utils.WriteMessage(utils.WriteMessageProps{
+			Type:    "error",
+			Message: utils.GetErrorMessage("GitHubRepoOpen"),
+		})
+
 		os.Exit(1)
 	}
 }
@@ -36,7 +43,8 @@ func HandlerOptionBuild() {
 			PackageJsonPath:     constants.PATH_PACKAGE_JSON,
 			UseCommitlint:       useCommitlint,
 			ShouldPublishToNpm:  shouldPublishToNpm,
-		})
+		},
+	)
 
 	if useCommitlint {
 		utils.GenerateCommitlintConfig(
@@ -44,8 +52,12 @@ func HandlerOptionBuild() {
 				PackageManagerToUse: packageManagerToUse,
 				PackageJsonPath:     constants.PATH_PACKAGE_JSON,
 				ShouldPublishToNpm:  shouldPublishToNpm,
-			})
+			},
+		)
 	}
 
-	utils.WriteMessage("success", "All tasks were completed")
+	utils.WriteMessage(utils.WriteMessageProps{
+		Type:    "success",
+		Message: "All tasks were completed",
+	})
 }

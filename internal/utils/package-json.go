@@ -30,12 +30,19 @@ func addScript(props addScriptProps) {
 
 	defer func() {
 		if r := recover(); r != nil {
-			WriteMessage("error", GetErrorMessage("AddScript"))
+			WriteMessage(WriteMessageProps{
+				Type:    "error",
+				Message: GetErrorMessage("AddScript"),
+			})
+
 			os.Exit(1)
 		}
 	}()
 
-	WriteMessage("info", "Modifying package.json...")
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: "Modifying package.json...",
+	})
 
 	if !existsSection(packageJsonPath, "scripts") {
 		createEmptySection(packageJsonPath, "scripts")
@@ -53,11 +60,17 @@ func addScript(props addScriptProps) {
 	case packageJsonScript:
 		scriptsSection[v.Key] = v.Value
 	default:
-		WriteMessage("error", "Invalid type for scriptsToAdd")
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("InvalidTypeForScriptsToAdd"),
+		})
 		os.Exit(1)
 	}
 
 	jsonMarshalIndentAndWriteFile(packageJsonObj, packageJsonPath)
 
-	WriteMessage("success", "Package.json modified successfully")
+	WriteMessage(WriteMessageProps{
+		Type:    "success",
+		Message: "Package.json modified successfully",
+	})
 }

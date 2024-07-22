@@ -2,18 +2,29 @@ package utils
 
 import (
 	"os"
+	"strings"
 )
 
 func createFolder(name string) {
 	os.Mkdir(name, 0750)
 
-	WriteMessage("info", "Created folder "+name)
+	message := "Created folder " + name
+
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: message,
+	})
 }
 
 func createFile(name string) {
 	os.NewFile(0750, name)
 
-	WriteMessage("info", "Created file "+name)
+	message := "Created file " + name
+
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: message,
+	})
 }
 
 func CheckinFolderOrFile(path string, folder bool) {
@@ -22,16 +33,25 @@ func CheckinFolderOrFile(path string, folder bool) {
 	if err != nil {
 
 		var folderType string
+
 		if folder {
 			folderType = "folder"
 		} else {
 			folderType = "file"
 		}
 
-		WriteMessage("error", "When checking "+folderType+": "+path)
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("CheckingFolderOrFile"),
+		})
 
 		if os.IsNotExist(err) {
-			WriteMessage("error", "Not found "+path)
+			errorMessage := GetErrorMessage("NotFound")
+
+			WriteMessage(WriteMessageProps{
+				Type:    "error",
+				Message: strings.Replace(errorMessage, "{fileName}", path, -1),
+			})
 
 			if folder {
 				createFolder(path)

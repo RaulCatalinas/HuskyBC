@@ -9,18 +9,31 @@ import (
 func modifyNpmIgnore(filesToAdd interface{}) {
 	defer func() {
 		if r := recover(); r != nil {
-			WriteMessage("error", GetErrorMessage("NpmIgnoreWrite"))
+			WriteMessage(WriteMessageProps{
+				Type:    "error",
+				Message: GetErrorMessage("NpmIgnoreWrite"),
+			})
+
 			os.Exit(1)
 		}
 	}()
 
-	WriteMessage("info", "Writing in the file \".npmignore\"...")
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: "Writing in the file \".npmignore\"...",
+	})
 
 	dir, err := os.Getwd()
+
 	if err != nil {
-		WriteMessage("error", "get wd")
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("GetWorkingDirectory"),
+		})
+
 		os.Exit(1)
 	}
+
 	npmIgnoreFilePath := fmt.Sprintf("%s/.npmignore", dir)
 
 	if !exists(npmIgnoreFilePath) {
@@ -30,6 +43,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	data := readFile(npmIgnoreFilePath)
 
 	ignoredFiles := string(data)
+
 	if ignoredFiles == "" {
 		var filesToWrite string
 		switch v := filesToAdd.(type) {
@@ -38,13 +52,21 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		case []string:
 			filesToWrite = strings.Join(v, "\n")
 		default:
-			WriteMessage("error", "Invalid type for filesToAdd")
+			WriteMessage(WriteMessageProps{
+				Type:    "error",
+				Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
+			})
+
 			os.Exit(1)
 		}
 
 		writeFile(npmIgnoreFilePath, []byte(filesToWrite))
 
-		WriteMessage("info", "\".npmignore\" file modified successfully")
+		WriteMessage(WriteMessageProps{
+			Type:    "success",
+			Message: "\".npmignore\" file modified successfully",
+		})
+
 		return
 	}
 
@@ -53,6 +75,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	})
 
 	trimmedIgnoredFilesArray := make([]string, 0, len(ignoredFilesArray))
+
 	for _, file := range ignoredFilesArray {
 		trimmedFile := strings.TrimSpace(file)
 		if trimmedFile != "" {
@@ -66,7 +89,11 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	case []string:
 		trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, v...)
 	default:
-		WriteMessage("error", "Invalid type for filesToAdd")
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
+		})
+
 		os.Exit(1)
 	}
 
@@ -74,5 +101,8 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 
 	writeFile(npmIgnoreFilePath, []byte(finalContent))
 
-	WriteMessage("info", "\".npmignore\" file modified successfully")
+	WriteMessage(WriteMessageProps{
+		Type:    "success",
+		Message: "\".npmignore\" file modified successfully",
+	})
 }
