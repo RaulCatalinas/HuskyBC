@@ -31,7 +31,6 @@ func CheckinFolderOrFile(path string, folder bool) {
 	_, err := os.Stat(path)
 
 	if err != nil {
-
 		var folderType string
 
 		if folder {
