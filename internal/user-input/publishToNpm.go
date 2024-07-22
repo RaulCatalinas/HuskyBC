@@ -25,7 +25,10 @@ func ShouldPublishToNpm() bool {
 	err := survey.Ask(questions, &answers)
 
 	if err != nil {
-		utils.WriteMessage("error", utils.GetErrorMessage("ShouldPublishToNpm"))
+		utils.WriteMessage(utils.WriteMessageProps{
+			Type:    "error",
+			Message: utils.GetErrorMessage("ShouldPublishToNpm"),
+		})
 
 		os.Exit(1)
 	}

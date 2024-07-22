@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 
@@ -26,18 +25,21 @@ func promiseSpawn(command string, args []string) error {
 func InstallDependencies(props InstallProps) {
 	defer func() {
 		if r := recover(); r != nil {
-			WriteMessage("error", GetErrorMessage("Dependencies"))
+			WriteMessage(WriteMessageProps{
+				Type:    "error",
+				Message: GetErrorMessage("Dependencies"),
+			})
+
 			os.Exit(1)
 		}
 	}()
 
-	installationCommand, exists := constants.INSTALLATION_COMMANDS[types.PackageManager(props.PackageManagerToUse)]
-	if !exists {
-		WriteMessage("error", "Invalid package manager")
-		os.Exit(1)
-	}
+	message := "Installing dependencies using: " + props.PackageManagerToUse + "..."
 
-	WriteMessage("info", fmt.Sprintf("Installing dependencies using: %s...", props.PackageManagerToUse))
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: string(message),
+	})
 
 	/* FIXME: Problemas al ejecutan bun, dice esto:
 	error: Module not found "...\HuskyBC\node_modules\husky\bin.mjs"
@@ -48,12 +50,24 @@ func InstallDependencies(props InstallProps) {
 		hice una prueba haciendo "bun add husky" directamente y es el mismo caso, lo que quiere decir que HuskyBC no presenta problemas
 		el problema viene desde el mismo bun
 	*/
+
+	installationCommand := constants.INSTALLATION_COMMANDS[props.PackageManagerToUse]
+
 	args := append([]string{installationCommand}, append(props.PackagesToInstall, "-D")...)
+
 	err := promiseSpawn(string(props.PackageManagerToUse), args)
+
 	if err != nil {
-		WriteMessage("error", GetErrorMessage(err.Error()))
+		WriteMessage(WriteMessageProps{
+			Type:    "error",
+			Message: GetErrorMessage("Dependencies"),
+		})
+
 		os.Exit(1)
 	}
 
-	WriteMessage("success", "Dependencies installed successfully")
+	WriteMessage(WriteMessageProps{
+		Type:    "success",
+		Message: "Dependencies installed successfully",
+	})
 }

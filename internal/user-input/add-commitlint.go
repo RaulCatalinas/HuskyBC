@@ -25,7 +25,10 @@ func AddCommitlint() bool {
 	err := survey.Ask(questions, &answers)
 
 	if err != nil {
-		utils.WriteMessage("error", utils.GetErrorMessage("HuskyConfigCleanOrder"))
+		utils.WriteMessage(utils.WriteMessageProps{
+			Type:    "error",
+			Message: utils.GetErrorMessage("AddCommitLint"),
+		})
 
 		os.Exit(1)
 	}

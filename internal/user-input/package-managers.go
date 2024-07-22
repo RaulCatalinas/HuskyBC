@@ -29,7 +29,10 @@ func GetPackageManager() types.PackageManager {
 	err := survey.Ask(questions, &answers)
 
 	if err != nil {
-		utils.WriteMessage("error", utils.GetErrorMessage("PackageManagerSelection"))
+		utils.WriteMessage(utils.WriteMessageProps{
+			Type:    "error",
+			Message: utils.GetErrorMessage("PackageManagerSelection"),
+		})
 
 		os.Exit(1)
 	}

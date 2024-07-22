@@ -13,27 +13,44 @@ type Props struct {
 }
 
 func GenerateHuskyConfig(props Props) {
-	WriteMessage("info", "Generating Husky's Configuration...")
+	WriteMessage(WriteMessageProps{
+		Type:    "config",
+		Message: "Generating Husky's Configuration...",
+	})
 
-	InstallDependencies(InstallProps{PackageManagerToUse: props.PackageManagerToUse, PackagesToInstall: []string{"husky"}})
+	InstallDependencies(InstallProps{
+		PackageManagerToUse: props.PackageManagerToUse,
+		PackagesToInstall:   []string{"husky"},
+	})
 
 	createHuskyConfigFiles(props.PackageManagerToUse, props.UseCommitlint)
 
-	addNecessaryScriptsToPakageJson(props.PackageJsonPath, props.PackageManagerToUse, props.ShouldPublishToNpm)
+	addNecessaryScriptsToPakageJson(
+		props.PackageJsonPath,
+		props.PackageManagerToUse,
+		props.ShouldPublishToNpm,
+	)
 
 	if props.ShouldPublishToNpm {
 		modifyNpmIgnore(".husky")
 	}
 
-	WriteMessage("success", "Husky's configuration generated successfully")
+	WriteMessage(WriteMessageProps{
+		Type:    "success",
+		Message: "Husky's configuration generated successfully",
+	})
 }
 
 func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitlint bool) {
-	WriteMessage("info", "Creating configuration file...")
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: "Creating configuration file...",
+	})
 
 	CheckinFolderOrFile(constants.PATH_DIR_HUSKY, true)
 
 	var preCommitFileValue string
+
 	if useCommitlint {
 		preCommitFileValue = constants.LINT_STAGED_CONFIG[types.PackageManager(packageManagerToUse)]
 	} else {
@@ -42,7 +59,10 @@ func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitl
 
 	writeFile(constants.PATH_DIR_HUSKY+"/pre-commit", []byte(preCommitFileValue))
 
-	WriteMessage("info", "Configuration file (pre-commit) created successfully")
+	WriteMessage(WriteMessageProps{
+		Type:    "success",
+		Message: "Configuration file (pre-commit) created successfully",
+	})
 }
 
 type packageJsonScript struct {
@@ -50,13 +70,20 @@ type packageJsonScript struct {
 	Value string
 }
 
-func addNecessaryScriptsToPakageJson(packaJsonPath string, packageManagerToUse types.PackageManager, sholdPublishToNpm bool) {
-	WriteMessage("info", "Add necessary scripts to "+packaJsonPath)
+func addNecessaryScriptsToPakageJson(
+	packageJsonPath string,
+	packageManagerToUse types.PackageManager,
+	shouldPublishToNpm bool,
+) {
+	WriteMessage(WriteMessageProps{
+		Type:    "info",
+		Message: "Adding necessary scripts to package.json...",
+	})
 
 	var huskyScriptsForYarn interface{}
 	var scriptsToAdd interface{}
 
-	if sholdPublishToNpm {
+	if shouldPublishToNpm {
 		huskyScriptsForYarn = packageJsonScript{Key: "postintall", Value: "husky"}
 	} else {
 		huskyScriptsForYarn = []packageJsonScript{
@@ -72,5 +99,8 @@ func addNecessaryScriptsToPakageJson(packaJsonPath string, packageManagerToUse t
 		scriptsToAdd = huskyScriptsForYarn
 	}
 
-	addScript(addScriptProps{ScriptsToAdd: scriptsToAdd, PackageJsonPath: packaJsonPath})
+	addScript(addScriptProps{
+		ScriptsToAdd:    scriptsToAdd,
+		PackageJsonPath: packageJsonPath,
+	})
 }
