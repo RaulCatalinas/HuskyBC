@@ -1,6 +1,7 @@
 package userinput
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
@@ -25,6 +26,13 @@ func GetPackageManager() types.PackageManager {
 	answers := struct {
 		PackageManager string `survey:"packageManger"`
 	}{}
+
+	utils.WriteMessage(utils.WriteMessageProps{
+		Type:    "warning",
+		Message: "When using Bun as a package manager it's possible that the dependencies aren't installed correctly, we're working on it.",
+	})
+
+	fmt.Println()
 
 	err := survey.Ask(questions, &answers)
 

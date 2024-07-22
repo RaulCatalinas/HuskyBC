@@ -7,4 +7,5 @@ const (
 	Error   MessageType = "error"
 	Info    MessageType = "info"
 	Config  MessageType = "config"
+	Warning MessageType = "warning"
 )

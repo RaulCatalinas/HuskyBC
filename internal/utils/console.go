@@ -24,5 +24,7 @@ func WriteMessage(props WriteMessageProps) {
 
 	case "config":
 		fmt.Println("\033[37m" + props.Message + "\033[0m")
+	case "warning":
+		fmt.Println("\033[33m" + props.Message + "\033[0m")
 	}
 }
