@@ -16,8 +16,8 @@
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.4.0",
-    "@commitlint/config-conventional": "19.2.2",
+    "@commitlint/cli": "19.4.1",
+    "@commitlint/config-conventional": "19.4.1",
     "@eslint/js": "^9.9.1",
     "@types/bun": "1.1.8",
     "@types/fs-extra": "11.0.4",
@@ -29,8 +29,8 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "husky": "9.1.5",
-    "lint-staged": "15.2.9",
-    "markdownlint": "0.34.0",
+    "lint-staged": "15.2.10",
+    "markdownlint": "0.35.0",
     "prettier": "3.3.3",
     "typescript": "5.5.4",
     "vite": "5.4.2",
