@@ -5,3 +5,9 @@ type Option struct {
 	Alias       string
 	Description string
 }
+
+type Command struct {
+	Name    string
+	Alias   string
+	Handler func()
+}
