@@ -1,4 +1,4 @@
-package constants
+package options
 
 import (
 	"github.com/RaulCatalinas/HuskyBC/internal/cli"
