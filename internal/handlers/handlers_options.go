@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	userinput "github.com/RaulCatalinas/HuskyBC/internal/user-input"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 	"github.com/toqueteos/webbrowser"
@@ -12,7 +13,7 @@ import (
 
 func HandlerOptionCollaborate() {
 	utils.WriteMessage(utils.WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Opening the GitHub repository...",
 	})
 
@@ -22,7 +23,7 @@ func HandlerOptionCollaborate() {
 
 	if err != nil {
 		utils.WriteMessage(utils.WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: utils.GetErrorMessage("GitHubRepoOpen"),
 		})
 
@@ -57,7 +58,7 @@ func HandlerOptionBuild() {
 	}
 
 	utils.WriteMessage(utils.WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "All tasks were completed",
 	})
 }

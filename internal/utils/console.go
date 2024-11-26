@@ -3,11 +3,11 @@ package utils
 import (
 	"fmt"
 
-	"github.com/RaulCatalinas/HuskyBC/internal/types"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 type WriteMessageProps struct {
-	Type    types.MessageType
+	Type    enums.MessageType
 	Message string
 }
 

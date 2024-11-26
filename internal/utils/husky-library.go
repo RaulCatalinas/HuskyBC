@@ -2,11 +2,11 @@ package utils
 
 import (
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
-	"github.com/RaulCatalinas/HuskyBC/internal/types"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 type Props struct {
-	PackageManagerToUse types.PackageManager
+	PackageManagerToUse enums.PackageManager
 	PackageJsonPath     string
 	UseCommitlint       bool
 	ShouldPublishToNpm  bool
@@ -14,7 +14,7 @@ type Props struct {
 
 func GenerateHuskyConfig(props Props) {
 	WriteMessage(WriteMessageProps{
-		Type:    "config",
+		Type:    enums.MessageTypeConfig,
 		Message: "Generating Husky's Configuration...",
 	})
 
@@ -36,14 +36,14 @@ func GenerateHuskyConfig(props Props) {
 	}
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "Husky's configuration generated successfully",
 	})
 }
 
-func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitlint bool) {
+func createHuskyConfigFiles(packageManagerToUse enums.PackageManager, useCommitlint bool) {
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Creating configuration file...",
 	})
 
@@ -52,7 +52,7 @@ func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitl
 	var preCommitFileValue string
 
 	if useCommitlint {
-		preCommitFileValue = constants.LINT_STAGED_CONFIG[types.PackageManager(packageManagerToUse)]
+		preCommitFileValue = constants.LINT_STAGED_CONFIG[enums.PackageManager(packageManagerToUse)]
 	} else {
 		preCommitFileValue = string(packageManagerToUse) + "test"
 	}
@@ -60,7 +60,7 @@ func createHuskyConfigFiles(packageManagerToUse types.PackageManager, useCommitl
 	writeFile(constants.PATH_DIR_HUSKY+"/pre-commit", []byte(preCommitFileValue))
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "Configuration file (pre-commit) created successfully",
 	})
 }
@@ -72,11 +72,11 @@ type packageJsonScript struct {
 
 func addNecessaryScriptsToPakageJson(
 	packageJsonPath string,
-	packageManagerToUse types.PackageManager,
+	packageManagerToUse enums.PackageManager,
 	shouldPublishToNpm bool,
 ) {
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Adding necessary scripts to package.json...",
 	})
 
