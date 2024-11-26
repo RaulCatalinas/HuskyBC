@@ -1,10 +1,12 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/cli"
 	"github.com/RaulCatalinas/HuskyBC/internal/options"
+	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 )
 
 func ConfigureOptions() {
@@ -22,7 +24,14 @@ func ConfigureOptions() {
 
 			return
 		}
-
-		cli.ShowHelp(options)
 	}
+
+	utils.WriteMessage(utils.WriteMessageProps{
+		Type:    "error",
+		Message: "The option you've tried to execute doesn't exist",
+	})
+
+	fmt.Println()
+
+	cli.ShowHelp(options)
 }
