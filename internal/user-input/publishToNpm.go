@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 )
 
@@ -26,7 +27,7 @@ func ShouldPublishToNpm() bool {
 
 	if err != nil {
 		utils.WriteMessage(utils.WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: utils.GetErrorMessage("ShouldPublishToNpm"),
 		})
 

@@ -5,11 +5,11 @@ import (
 	"sync"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
-	"github.com/RaulCatalinas/HuskyBC/internal/types"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 type CommitlintProps struct {
-	PackageManagerToUse types.PackageManager
+	PackageManagerToUse enums.PackageManager
 	PackageJsonPath     string
 	ShouldPublishToNpm  bool
 }
@@ -18,7 +18,7 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 	defer func() {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: GetErrorMessage("Commitlint"),
 			})
 
@@ -27,7 +27,7 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 	}()
 
 	WriteMessage(WriteMessageProps{
-		Type:    "config",
+		Type:    enums.MessageTypeConfig,
 		Message: "Configuring commitlint...",
 	})
 
@@ -57,14 +57,14 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 	}
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "commitlint's configuration generated successfully",
 	})
 }
 
-func createCommitlintConfigFiles(packageManagerToUse types.PackageManager) {
+func createCommitlintConfigFiles(packageManagerToUse enums.PackageManager) {
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Creating configuration files...",
 	})
 
@@ -109,7 +109,7 @@ func createCommitlintConfigFiles(packageManagerToUse types.PackageManager) {
 	wg.Wait()
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "Configuration files (commit-msg, commitlint.config.js and .lintstagedrc) created successfully",
 	})
 }

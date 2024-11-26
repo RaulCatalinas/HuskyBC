@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/cli"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	"github.com/RaulCatalinas/HuskyBC/internal/options"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 )
@@ -27,7 +28,7 @@ func ConfigureOptions() {
 	}
 
 	utils.WriteMessage(utils.WriteMessageProps{
-		Type:    "error",
+		Type:    enums.MessageTypeError,
 		Message: "The option you've tried to execute doesn't exist",
 	})
 

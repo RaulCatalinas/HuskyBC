@@ -5,11 +5,11 @@ import (
 	"os/exec"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
-	"github.com/RaulCatalinas/HuskyBC/internal/types"
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 type InstallProps struct {
-	PackageManagerToUse types.PackageManager
+	PackageManagerToUse enums.PackageManager
 	PackagesToInstall   []string
 }
 
@@ -26,7 +26,7 @@ func InstallDependencies(props InstallProps) {
 	defer func() {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: GetErrorMessage("Dependencies"),
 			})
 
@@ -37,7 +37,7 @@ func InstallDependencies(props InstallProps) {
 	message := "Installing dependencies using: " + props.PackageManagerToUse + "..."
 
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeConfig,
 		Message: string(message),
 	})
 
@@ -59,7 +59,7 @@ func InstallDependencies(props InstallProps) {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("Dependencies"),
 		})
 
@@ -67,7 +67,7 @@ func InstallDependencies(props InstallProps) {
 	}
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "Dependencies installed successfully",
 	})
 }
