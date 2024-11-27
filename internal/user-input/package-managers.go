@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 
@@ -16,7 +15,7 @@ func GetPackageManager() enums.PackageManager {
 		{
 			Name: "packageManger",
 			Prompt: &survey.Select{
-				Options: constants.PACKAGE_MANAGERS,
+				Options: utils.GetPackageManagersAsStrings(),
 				Message: "Which package manager do you wanna use?",
 				Default: "npm", // <- If we use the enum here the library gives an error.
 			},
