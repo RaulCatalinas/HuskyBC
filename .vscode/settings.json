@@ -2,5 +2,9 @@
   "markdownlint.config": {
     "default": true,
     "MD029": false
-  }
+  },
+  "cSpell.words": [
+    "Checkin",
+    "userinput"
+  ]
 }

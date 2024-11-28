@@ -3,6 +3,8 @@ package utils
 import (
 	"os"
 	"strings"
+
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 func createFolder(name string) {
@@ -11,7 +13,7 @@ func createFolder(name string) {
 	message := "Created folder " + name
 
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: message,
 	})
 }
@@ -22,7 +24,7 @@ func createFile(name string) {
 	message := "Created file " + name
 
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: message,
 	})
 }
@@ -32,7 +34,7 @@ func CheckinFolderOrFile(path string, isFolder bool) {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("CheckingFolderOrFile"),
 		})
 
@@ -40,7 +42,7 @@ func CheckinFolderOrFile(path string, isFolder bool) {
 			errorMessage := GetErrorMessage("NotFound")
 
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: strings.Replace(errorMessage, "{fileName}", path, -1),
 			})
 
