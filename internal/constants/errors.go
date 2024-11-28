@@ -25,7 +25,7 @@ var ERROR_MESSAGES = map[string]string{
 
 	"ConfigFilesCreate": "An error occurred while creating configuration files. Please try again later, if the error persists please report it on " + ISSUES + ".",
 
-	"PublishConfirmation": "An error occurred while confirming npm publication. Please try again later, if the error persists, please report it on" + ISSUES + ".",
+	"ShouldPublishToNpm": "An error occurred while confirming npm publication. Please try again later, if the error persists, please report it on" + ISSUES + ".",
 
 	"NpmIgnoreWrite": "An error occurred while writing to the '.npmignore' file. Please try again later, if the error persists please report it on " + ISSUES + ".",
 
