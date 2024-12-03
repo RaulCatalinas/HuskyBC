@@ -2,6 +2,8 @@ package utils
 
 import (
 	"os"
+
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 type addScriptProps struct {
@@ -31,7 +33,7 @@ func addScript(props addScriptProps) {
 	defer func() {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: GetErrorMessage("AddScript"),
 			})
 
@@ -40,7 +42,7 @@ func addScript(props addScriptProps) {
 	}()
 
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Modifying package.json...",
 	})
 
@@ -61,7 +63,7 @@ func addScript(props addScriptProps) {
 		scriptsSection[v.Key] = v.Value
 	default:
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("InvalidTypeForScriptsToAdd"),
 		})
 		os.Exit(1)
@@ -70,7 +72,7 @@ func addScript(props addScriptProps) {
 	jsonMarshalIndentAndWriteFile(packageJsonObj, packageJsonPath)
 
 	WriteMessage(WriteMessageProps{
-		Type:    "success",
+		Type:    enums.MessageTypeSuccess,
 		Message: "Package.json modified successfully",
 	})
 }
