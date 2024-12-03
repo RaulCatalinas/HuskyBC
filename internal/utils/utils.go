@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"strings"
+
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 func exists(filePath string) bool {
@@ -17,7 +19,7 @@ func createEmptyFile(fileName string) {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("CreateEmptyFile"),
 		})
 
@@ -33,7 +35,7 @@ func readFile(filename string) []byte {
 		errorMessage := GetErrorMessage("ReadFile")
 
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: strings.Replace(errorMessage, "{fileName}", filename, -1),
 		})
 
@@ -50,7 +52,7 @@ func writeFile(filename string, newData []byte) {
 		errorMessage := GetErrorMessage("WriteFile")
 
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: strings.Replace(errorMessage, "{fileName}", filename, -1),
 		})
 	}
@@ -61,7 +63,7 @@ func jsonMarshalIndent(packageJsonObj map[string]interface{}) []byte {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("JsonMarshal"),
 		})
 
@@ -78,7 +80,7 @@ func jsonUnmarshal(data []byte) map[string]interface{} {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("JsonUnmarshal"),
 		})
 

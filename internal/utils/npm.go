@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 )
 
 func modifyNpmIgnore(filesToAdd interface{}) {
 	defer func() {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: GetErrorMessage("NpmIgnoreWrite"),
 			})
 
@@ -19,7 +21,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	}()
 
 	WriteMessage(WriteMessageProps{
-		Type:    "info",
+		Type:    enums.MessageTypeInfo,
 		Message: "Writing in the file \".npmignore\"...",
 	})
 
@@ -27,7 +29,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("GetWorkingDirectory"),
 		})
 
@@ -53,7 +55,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 			filesToWrite = strings.Join(v, "\n")
 		default:
 			WriteMessage(WriteMessageProps{
-				Type:    "error",
+				Type:    enums.MessageTypeError,
 				Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
 			})
 
@@ -90,7 +92,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, v...)
 	default:
 		WriteMessage(WriteMessageProps{
-			Type:    "error",
+			Type:    enums.MessageTypeError,
 			Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
 		})
 
