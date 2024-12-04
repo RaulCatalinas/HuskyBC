@@ -25,7 +25,7 @@ func GenerateHuskyConfig(props Props) {
 
 	createHuskyConfigFiles(props.PackageManagerToUse, props.UseCommitlint)
 
-	addNecessaryScriptsToPakageJson(
+	addNecessaryScriptsToPackageJson(
 		props.PackageJsonPath,
 		props.PackageManagerToUse,
 		props.ShouldPublishToNpm,
@@ -70,7 +70,7 @@ type packageJsonScript struct {
 	Value string
 }
 
-func addNecessaryScriptsToPakageJson(
+func addNecessaryScriptsToPackageJson(
 	packageJsonPath string,
 	packageManagerToUse enums.PackageManager,
 	shouldPublishToNpm bool,

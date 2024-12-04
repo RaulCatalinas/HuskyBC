@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 type addScriptProps struct {
@@ -34,7 +35,7 @@ func addScript(props addScriptProps) {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
-				Message: GetErrorMessage("AddScript"),
+				Message: errorMessages.FILE_ERROR_MESSAGES[enums.AddScriptError],
 			})
 
 			os.Exit(1)
@@ -64,7 +65,7 @@ func addScript(props addScriptProps) {
 	default:
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("InvalidTypeForScriptsToAdd"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError],
 		})
 		os.Exit(1)
 	}

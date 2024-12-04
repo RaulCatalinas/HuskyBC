@@ -6,6 +6,7 @@ import (
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 	userinput "github.com/RaulCatalinas/HuskyBC/internal/user-input"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 	"github.com/toqueteos/webbrowser"
@@ -24,7 +25,7 @@ func HandlerOptionCollaborate() {
 	if err != nil {
 		utils.WriteMessage(utils.WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: utils.GetErrorMessage("GitHubRepoOpen"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.GitHubRepoOpenError],
 		})
 
 		os.Exit(1)
