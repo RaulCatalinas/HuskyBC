@@ -7,7 +7,7 @@ import (
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
-	userinput "github.com/RaulCatalinas/HuskyBC/internal/user-input"
+	userInput "github.com/RaulCatalinas/HuskyBC/internal/user_input"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 	"github.com/toqueteos/webbrowser"
 )
@@ -35,9 +35,9 @@ func HandlerOptionCollaborate() {
 func HandlerOptionBuild() {
 	utils.CheckinFolderOrFile(constants.PATH_PACKAGE_JSON, false)
 
-	packageManagerToUse := userinput.GetPackageManager()
-	useCommitlint := userinput.AddCommitlint()
-	shouldPublishToNpm := userinput.ShouldPublishToNpm()
+	packageManagerToUse := userInput.GetPackageManager()
+	useCommitlint := userInput.AddCommitlint()
+	shouldPublishToNpm := userInput.ShouldPublishToNpm()
 
 	utils.GenerateHuskyConfig(
 		utils.Props{
