@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 func exists(filePath string) bool {
@@ -20,7 +21,7 @@ func createEmptyFile(fileName string) {
 	if err != nil {
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("CreateEmptyFile"),
+			Message: errorMessages.FILE_ERROR_MESSAGES[enums.CreateEmptyFileError],
 		})
 
 		os.Exit(1)
@@ -32,7 +33,7 @@ func readFile(filename string) []byte {
 	dataByte, err := os.ReadFile(filename)
 
 	if err != nil {
-		errorMessage := GetErrorMessage("ReadFile")
+		errorMessage := errorMessages.FILE_ERROR_MESSAGES[enums.ReadFileError]
 
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
@@ -49,7 +50,7 @@ func writeFile(filename string, newData []byte) {
 	err := os.WriteFile(filename, newData, 0644)
 
 	if err != nil {
-		errorMessage := GetErrorMessage("WriteFile")
+		errorMessage := errorMessages.FILE_ERROR_MESSAGES[enums.WriteFileError]
 
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
@@ -64,7 +65,7 @@ func jsonMarshalIndent(packageJsonObj map[string]interface{}) []byte {
 	if err != nil {
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("JsonMarshal"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.JsonMarshalError],
 		})
 
 		os.Exit(1)
@@ -81,7 +82,7 @@ func jsonUnmarshal(data []byte) map[string]interface{} {
 	if err != nil {
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("JsonUnmarshal"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.JsonUnmarshalError],
 		})
 
 		os.Exit(1)

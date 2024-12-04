@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 func modifyNpmIgnore(filesToAdd interface{}) {
@@ -13,7 +14,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
-				Message: GetErrorMessage("NpmIgnoreWrite"),
+				Message: errorMessages.FILE_ERROR_MESSAGES[enums.NpmIgnoreWriteError],
 			})
 
 			os.Exit(1)
@@ -30,7 +31,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	if err != nil {
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("GetWorkingDirectory"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.GetWorkingDirectoryError],
 		})
 
 		os.Exit(1)
@@ -56,7 +57,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		default:
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
-				Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
+				Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError],
 			})
 
 			os.Exit(1)
@@ -93,7 +94,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 	default:
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("InvalidTypeForFilesToAdd"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError],
 		})
 
 		os.Exit(1)

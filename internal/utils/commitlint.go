@@ -6,6 +6,7 @@ import (
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 type CommitlintProps struct {
@@ -19,7 +20,7 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
-				Message: GetErrorMessage("Commitlint"),
+				Message: errorMessages.CONFIG_ERROR_MESSAGES[enums.CommitLintConfigError],
 			})
 
 			os.Exit(1)

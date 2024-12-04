@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 func createFolder(name string) {
@@ -24,7 +25,7 @@ func createFile(name string) {
 	message := "Created file " + name
 
 	WriteMessage(WriteMessageProps{
-		Type:    enums.MessageTypeInfo,
+		Type:    enums.MessageTypeSuccess,
 		Message: message,
 	})
 }
@@ -33,24 +34,24 @@ func CheckinFolderOrFile(path string, isFolder bool) {
 	_, err := os.Stat(path)
 
 	if err != nil {
+		if isFolder {
+			createFolder(path)
+		} else {
+			createFile(path)
+		}
+
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("CheckingFolderOrFile"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.CheckingFolderOrFileError],
 		})
 
 		if os.IsNotExist(err) {
-			errorMessage := GetErrorMessage("NotFound")
+			errorMessage := errorMessages.FILE_ERROR_MESSAGES[enums.NotFoundError]
 
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
 				Message: strings.Replace(errorMessage, "{fileName}", path, -1),
 			})
-
-			if isFolder {
-				createFolder(path)
-			} else {
-				createFile(path)
-			}
 		} else {
 			os.Exit(0)
 		}

@@ -6,6 +6,7 @@ import (
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
 type InstallProps struct {
@@ -27,7 +28,7 @@ func InstallDependencies(props InstallProps) {
 		if r := recover(); r != nil {
 			WriteMessage(WriteMessageProps{
 				Type:    enums.MessageTypeError,
-				Message: GetErrorMessage("Dependencies"),
+				Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.DependenciesError],
 			})
 
 			os.Exit(1)
@@ -60,7 +61,7 @@ func InstallDependencies(props InstallProps) {
 	if err != nil {
 		WriteMessage(WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: GetErrorMessage("Dependencies"),
+			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.DependenciesError],
 		})
 
 		os.Exit(1)

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
+	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 	"github.com/RaulCatalinas/HuskyBC/internal/utils"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -38,7 +39,7 @@ func GetPackageManager() enums.PackageManager {
 	if err != nil {
 		utils.WriteMessage(utils.WriteMessageProps{
 			Type:    enums.MessageTypeError,
-			Message: utils.GetErrorMessage("PackageManagerSelection"),
+			Message: errorMessages.USER_INPUT_ERROR_MESSAGES[enums.PackageManagerSelectionError],
 		})
 
 		os.Exit(1)
