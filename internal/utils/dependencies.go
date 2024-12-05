@@ -47,7 +47,7 @@ func InstallDependencies(props InstallProps) {
 	message := "Installing dependencies using: " + props.PackageManagerToUse + "..."
 
 	WriteMessage(WriteMessageProps{
-		Type:    enums.MessageTypeConfig,
+		Type:    enums.MessageTypeInfo,
 		Message: string(message),
 	})
 
