@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
+	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
@@ -26,7 +26,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		Message: "Writing in the file \".npmignore\"...",
 	})
 
-	dir, err := os.Getwd()
+	_, err := os.Getwd()
 
 	if err != nil {
 		WriteMessage(WriteMessageProps{
@@ -37,18 +37,15 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		os.Exit(1)
 	}
 
-	npmIgnoreFilePath := fmt.Sprintf("%s/.npmignore", dir)
+	CreateFolderOrFileIfNotExists(constants.PATH_DIR_NPMIGNORE, false)
 
-	if !exists(npmIgnoreFilePath) {
-		createEmptyFile(".npmignore")
-	}
-
-	data := readFile(npmIgnoreFilePath)
+	data := readFile(constants.PATH_DIR_NPMIGNORE)
 
 	ignoredFiles := string(data)
 
 	if ignoredFiles == "" {
 		var filesToWrite string
+
 		switch v := filesToAdd.(type) {
 		case string:
 			filesToWrite = v
@@ -63,7 +60,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 			os.Exit(1)
 		}
 
-		writeFile(npmIgnoreFilePath, []byte(filesToWrite))
+		writeFile(constants.PATH_DIR_NPMIGNORE, []byte(filesToWrite))
 
 		WriteMessage(WriteMessageProps{
 			Type:    "success",
@@ -81,6 +78,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 
 	for _, file := range ignoredFilesArray {
 		trimmedFile := strings.TrimSpace(file)
+
 		if trimmedFile != "" {
 			trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, trimmedFile)
 		}
@@ -102,7 +100,7 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 
 	finalContent := strings.Join(trimmedIgnoredFilesArray, "\n")
 
-	writeFile(npmIgnoreFilePath, []byte(finalContent))
+	writeFile(constants.PATH_DIR_NPMIGNORE, []byte(finalContent))
 
 	WriteMessage(WriteMessageProps{
 		Type:    "success",

@@ -9,8 +9,8 @@ import (
 	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
-func exists(filePath string) bool {
-	_, err := os.Stat(filePath)
+func CheckIfExists(path string) bool {
+	_, err := os.Stat(path)
 
 	return !os.IsNotExist(err)
 }
@@ -27,6 +27,35 @@ func createEmptyFile(fileName string) {
 		os.Exit(1)
 	}
 	defer file.Close()
+}
+
+func createFolder(name string) {
+	os.Mkdir(name, 0750)
+
+	message := "Created folder " + name
+
+	WriteMessage(WriteMessageProps{
+		Type:    enums.MessageTypeSuccess,
+		Message: message,
+	})
+}
+
+func createFolderOrFile(path string, isFolder bool) {
+	if isFolder {
+		createFolder(path)
+	} else {
+		createEmptyFile(path)
+	}
+}
+
+func CreateEmptyJsonFileIfNotExists(fileName string) {
+	exist := CheckIfExists(fileName)
+
+	if !exist {
+		createEmptyFile(fileName)
+
+		writeFile(fileName, []byte("{}"))
+	}
 }
 
 func readFile(filename string) []byte {

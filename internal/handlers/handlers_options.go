@@ -33,7 +33,7 @@ func HandlerOptionCollaborate() {
 }
 
 func HandlerOptionBuild() {
-	utils.CheckinFolderOrFile(constants.PATH_PACKAGE_JSON, false)
+	utils.CreateEmptyJsonFileIfNotExists(constants.PATH_PACKAGE_JSON)
 
 	packageManagerToUse := userInput.GetPackageManager()
 	useCommitlint := userInput.AddCommitlint()

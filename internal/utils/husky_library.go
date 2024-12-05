@@ -47,7 +47,7 @@ func createHuskyConfigFiles(packageManagerToUse enums.PackageManager, useCommitl
 		Message: "Creating configuration file...",
 	})
 
-	CheckinFolderOrFile(constants.PATH_DIR_HUSKY, true)
+	CreateFolderOrFileIfNotExists(constants.PATH_DIR_HUSKY, true)
 
 	var preCommitFileValue string
 

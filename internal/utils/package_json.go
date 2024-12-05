@@ -3,6 +3,7 @@ package utils
 import (
 	"os"
 
+	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
 	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
@@ -47,13 +48,13 @@ func addScript(props addScriptProps) {
 		Message: "Modifying package.json...",
 	})
 
-	if !existsSection(packageJsonPath, "scripts") {
-		createEmptySection(packageJsonPath, "scripts")
+	if !existsSection(packageJsonPath, constants.SCRIPTS_SECTION) {
+		createEmptySection(packageJsonPath, constants.SCRIPTS_SECTION)
 	}
 
 	packageJsonObj := readAndUnmarshalPackageJson(packageJsonPath)
 
-	scriptsSection := packageJsonObj["scripts"].(map[string]interface{})
+	scriptsSection := packageJsonObj[constants.SCRIPTS_SECTION].(map[string]interface{})
 
 	switch v := scriptsToAdd.(type) {
 	case []packageJsonScript:
