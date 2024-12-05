@@ -35,6 +35,15 @@ func InstallDependencies(props InstallProps) {
 		}
 	}()
 
+	existsDevDepsSection := existsSection(
+		constants.PATH_PACKAGE_JSON,
+		constants.DEV_DEPS_SECTION,
+	)
+
+	if !existsDevDepsSection {
+		createEmptySection(constants.PATH_PACKAGE_JSON, constants.DEV_DEPS_SECTION)
+	}
+
 	message := "Installing dependencies using: " + props.PackageManagerToUse + "..."
 
 	WriteMessage(WriteMessageProps{
@@ -54,7 +63,13 @@ func InstallDependencies(props InstallProps) {
 
 	installationCommand := constants.INSTALLATION_COMMANDS[props.PackageManagerToUse]
 
-	args := append([]string{installationCommand}, append(props.PackagesToInstall, "-D")...)
+	args := append(
+		[]string{installationCommand},
+		append(
+			props.PackagesToInstall,
+			constants.DEV_DEPS_INSTALLATION_PARAM,
+		)...,
+	)
 
 	err := promiseSpawn(string(props.PackageManagerToUse), args)
 
