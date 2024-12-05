@@ -24,7 +24,6 @@ const (
 const (
 	JsonUnmarshalError            ProcessError = "JsonUnmarshal"
 	JsonMarshalError              ProcessError = "JsonMarshal"
-	GetWorkingDirectoryError      ProcessError = "GetWorkingDirectory"
 	InvalidTypeForFilesToAddError ProcessError = "InvalidTypeForFilesToAdd"
 	DependenciesError             ProcessError = "Dependencies"
 	GitHubRepoOpenError           ProcessError = "GitHubRepoOpen"

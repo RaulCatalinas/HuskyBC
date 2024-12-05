@@ -26,17 +26,6 @@ func modifyNpmIgnore(filesToAdd interface{}) {
 		Message: "Writing in the file \".npmignore\"...",
 	})
 
-	_, err := os.Getwd()
-
-	if err != nil {
-		WriteMessage(WriteMessageProps{
-			Type:    enums.MessageTypeError,
-			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.GetWorkingDirectoryError],
-		})
-
-		os.Exit(1)
-	}
-
 	CreateFolderOrFileIfNotExists(constants.PATH_DIR_NPMIGNORE, false)
 
 	data := readFile(constants.PATH_DIR_NPMIGNORE)
