@@ -3,13 +3,11 @@ package error_messages
 import "github.com/RaulCatalinas/HuskyBC/internal/enums"
 
 var PROCESS_ERROR_MESSAGES = map[enums.ProcessError]string{
-	enums.JsonUnmarshalError: "Replace this with an error message that's descriptive and easily understandable by any developer.",
+	enums.JsonUnmarshalError: generateErrorMessage("unmarshalling JSON data"),
 
-	enums.JsonMarshalError: "Replace this with an error message that's descriptive and easily understandable by any developer.",
+	enums.JsonMarshalError: generateErrorMessage("marshalling JSON data with indentation"),
 
-	enums.GetWorkingDirectoryError: "Replace this with an error message that's descriptive and easily understandable by any developer.",
-
-	enums.InvalidTypeForFilesToAddError: "Replace this with an error message that's descriptive and easily understandable by any developer.",
+	enums.InvalidTypeForFilesToAddError: generateErrorMessage("adding files to .npmignore with an invalid type"),
 
 	enums.DependenciesError: generateErrorMessage("installing dependencies"),
 
