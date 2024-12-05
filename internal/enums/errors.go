@@ -26,7 +26,6 @@ const (
 	JsonMarshalError              ProcessError = "JsonMarshal"
 	GetWorkingDirectoryError      ProcessError = "GetWorkingDirectory"
 	InvalidTypeForFilesToAddError ProcessError = "InvalidTypeForFilesToAdd"
-	CheckingFolderOrFileError     ProcessError = "CheckingFolderOrFile"
 	DependenciesError             ProcessError = "Dependencies"
 	GitHubRepoOpenError           ProcessError = "GitHubRepoOpen"
 )
