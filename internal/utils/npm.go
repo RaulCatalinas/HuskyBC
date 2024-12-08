@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"os"
 	"strings"
 
@@ -9,90 +10,153 @@ import (
 	errorMessages "github.com/RaulCatalinas/HuskyBC/internal/error_messages"
 )
 
-func modifyNpmIgnore(filesToAdd interface{}) {
-	defer func() {
-		if r := recover(); r != nil {
-			WriteMessage(WriteMessageProps{
-				Type:    enums.MessageTypeError,
-				Message: errorMessages.FILE_ERROR_MESSAGES[enums.NpmIgnoreWriteError],
-			})
+func handlePanic() {
+	if r := recover(); r != nil {
+		logError(errorMessages.FILE_ERROR_MESSAGES[enums.NpmIgnoreWriteError])
+		os.Exit(1)
+	}
+}
 
-			os.Exit(1)
-		}
-	}()
-
+func logInfo(message string) {
 	WriteMessage(WriteMessageProps{
 		Type:    enums.MessageTypeInfo,
-		Message: "Writing in the file \".npmignore\"...",
+		Message: message,
 	})
+}
 
-	CreateFolderOrFileIfNotExists(constants.PATH_DIR_NPMIGNORE, false)
-
-	data := readFile(constants.PATH_DIR_NPMIGNORE)
-
-	ignoredFiles := string(data)
-
-	if ignoredFiles == "" {
-		var filesToWrite string
-
-		switch v := filesToAdd.(type) {
-		case string:
-			filesToWrite = v
-		case []string:
-			filesToWrite = strings.Join(v, "\n")
-		default:
-			WriteMessage(WriteMessageProps{
-				Type:    enums.MessageTypeError,
-				Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError],
-			})
-
-			os.Exit(1)
-		}
-
-		writeFile(constants.PATH_DIR_NPMIGNORE, []byte(filesToWrite))
-
-		WriteMessage(WriteMessageProps{
-			Type:    "success",
-			Message: "\".npmignore\" file modified successfully",
-		})
-
-		return
-	}
-
-	ignoredFilesArray := strings.FieldsFunc(ignoredFiles, func(r rune) bool {
-		return r == '\n'
+func logSuccess(message string) {
+	WriteMessage(WriteMessageProps{
+		Type:    enums.MessageTypeSuccess,
+		Message: message,
 	})
+}
 
-	trimmedIgnoredFilesArray := make([]string, 0, len(ignoredFilesArray))
+func logError(message string) {
+	WriteMessage(WriteMessageProps{
+		Type:    enums.MessageTypeError,
+		Message: message,
+	})
+}
 
-	for _, file := range ignoredFilesArray {
-		trimmedFile := strings.TrimSpace(file)
-
-		if trimmedFile != "" {
-			trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, trimmedFile)
-		}
-	}
-
+func parseFilesToAdd(filesToAdd interface{}) []string {
 	switch v := filesToAdd.(type) {
 	case string:
-		trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, v)
+		return []string{strings.TrimSpace(v)}
 	case []string:
-		trimmedIgnoredFilesArray = append(trimmedIgnoredFilesArray, v...)
+		cleaned := make([]string, 0, len(v))
+
+		for _, file := range v {
+			trimmed := strings.TrimSpace(file)
+
+			if trimmed != "" {
+				cleaned = append(cleaned, trimmed)
+			}
+		}
+
+		return cleaned
 	default:
-		WriteMessage(WriteMessageProps{
-			Type:    enums.MessageTypeError,
-			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError],
-		})
+		logError(errorMessages.PROCESS_ERROR_MESSAGES[enums.InvalidTypeForFilesToAddError])
 
 		os.Exit(1)
 	}
 
-	finalContent := strings.Join(trimmedIgnoredFilesArray, "\n")
+	return nil
+}
 
-	writeFile(constants.PATH_DIR_NPMIGNORE, []byte(finalContent))
+func mergeFiles(existingFiles, newFiles []string) []string {
+	fileSet := make(map[string]struct{}, len(existingFiles)+len(newFiles))
 
-	WriteMessage(WriteMessageProps{
-		Type:    "success",
-		Message: "\".npmignore\" file modified successfully",
-	})
+	for _, file := range existingFiles {
+		fileSet[file] = struct{}{}
+	}
+
+	for _, file := range newFiles {
+		fileSet[file] = struct{}{}
+	}
+
+	merged := make([]string, 0, len(fileSet))
+
+	for file := range fileSet {
+		merged = append(merged, file)
+	}
+
+	return merged
+}
+
+func readNpmIgnore(filePath string) ([]string, error) {
+	file, err := os.Open(filePath)
+
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []string{}, nil
+		}
+
+		return nil, err
+	}
+
+	defer file.Close()
+
+	var files []string
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+
+		if line != "" {
+			files = append(files, line)
+		}
+	}
+
+	return files, scanner.Err()
+}
+
+func writeNpmIgnore(filePath string, content []string) error {
+	file, err := os.Create(filePath)
+
+	if err != nil {
+		return err
+	}
+
+	defer file.Close()
+
+	writer := bufio.NewWriter(file)
+
+	for _, line := range content {
+		_, err := writer.WriteString(line + "\n")
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return writer.Flush()
+}
+
+func modifyNpmIgnore(filesToAdd interface{}) {
+	defer handlePanic()
+
+	logInfo("Writing to the \".npmignore\" file...")
+
+	CreateFolderOrFileIfNotExists(constants.PATH_DIR_NPMIGNORE, false)
+
+	existingFiles, err := readNpmIgnore(constants.PATH_DIR_NPMIGNORE)
+
+	if err != nil {
+		logError(errorMessages.FILE_ERROR_MESSAGES[enums.NpmIgnoreWriteError])
+
+		os.Exit(1)
+	}
+
+	filesToWrite := parseFilesToAdd(filesToAdd)
+	finalContent := mergeFiles(existingFiles, filesToWrite)
+
+	err = writeNpmIgnore(constants.PATH_DIR_NPMIGNORE, finalContent)
+
+	if err != nil {
+		logError(errorMessages.FILE_ERROR_MESSAGES[enums.NpmIgnoreWriteError])
+		os.Exit(1)
+	}
+
+	logSuccess("\".npmignore\" file modified successfully")
 }
