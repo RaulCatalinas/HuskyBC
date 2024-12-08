@@ -2,18 +2,29 @@ package cli
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/types"
 )
 
 func ShowHelp(options []types.Option) {
-	fmt.Print("Usage: huskybc [options]\n\n")
-	fmt.Print("Command line for easy Husky configuration\n\n")
-	fmt.Println("Options:")
+	var builder strings.Builder
+
+	builder.WriteString("Usage: huskybc [options]\n\n")
+	builder.WriteString("Command line for easy Husky configuration\n\n")
+	builder.WriteString("Options:\n")
 
 	for _, option := range options {
-		fmt.Printf("%-15s %-5s %s\n", option.Name, option.Alias, option.Description)
+		fmt.Fprintf(
+			&builder,
+			"%-15s %-5s %s\n",
+			option.Name,
+			option.Alias,
+			option.Description,
+		)
 	}
 
-	fmt.Println()
+	builder.WriteString("\n")
+
+	fmt.Print(builder.String())
 }

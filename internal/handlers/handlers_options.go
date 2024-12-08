@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"os"
-	"time"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
@@ -18,11 +17,7 @@ func HandlerOptionCollaborate() {
 		Message: "Opening the GitHub repository...",
 	})
 
-	time.Sleep(5 * time.Millisecond)
-
-	err := webbrowser.Open(constants.REPOSITORY)
-
-	if err != nil {
+	if err := webbrowser.Open(constants.REPOSITORY); err != nil {
 		utils.WriteMessage(utils.WriteMessageProps{
 			Type:    enums.MessageTypeError,
 			Message: errorMessages.PROCESS_ERROR_MESSAGES[enums.GitHubRepoOpenError],
