@@ -18,11 +18,6 @@ func GenerateHuskyConfig(props Props) {
 		Message: "Generating Husky's Configuration...",
 	})
 
-	InstallDependencies(InstallProps{
-		PackageManagerToUse: props.PackageManagerToUse,
-		PackagesToInstall:   []string{"husky"},
-	})
-
 	createHuskyConfigFiles(props.PackageManagerToUse, props.UseCommitlint)
 
 	addNecessaryScriptsToPackageJson(

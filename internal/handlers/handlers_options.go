@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"os"
+	"sync"
 
 	"github.com/RaulCatalinas/HuskyBC/internal/constants"
 	"github.com/RaulCatalinas/HuskyBC/internal/enums"
@@ -28,30 +29,62 @@ func HandlerOptionCollaborate() {
 }
 
 func HandlerOptionBuild() {
-	utils.CreateEmptyJsonFileIfNotExists(constants.PATH_PACKAGE_JSON)
-
 	packageManagerToUse := userInput.GetPackageManager()
 	useCommitlint := userInput.AddCommitlint()
 	shouldPublishToNpm := userInput.ShouldPublishToNpm()
 
-	utils.GenerateHuskyConfig(
-		utils.Props{
-			PackageManagerToUse: packageManagerToUse,
-			PackageJsonPath:     constants.PATH_PACKAGE_JSON,
-			UseCommitlint:       useCommitlint,
-			ShouldPublishToNpm:  shouldPublishToNpm,
-		},
-	)
+	utils.CreateEmptyJsonFileIfNotExists(constants.PATH_PACKAGE_JSON)
+
+	dependenciesToInstall := []string{"husky"}
 
 	if useCommitlint {
-		utils.GenerateCommitlintConfig(
-			utils.CommitlintProps{
+		dependenciesToInstall = append(
+			dependenciesToInstall,
+			"lint-staged",
+			"@commitlint/cli",
+			"@commitlint/config-conventional",
+		)
+	}
+
+	utils.InstallDependencies(utils.InstallProps{
+		PackageManagerToUse: packageManagerToUse,
+		PackagesToInstall:   dependenciesToInstall,
+	})
+
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+
+	go func() {
+		defer wg.Done()
+
+		utils.GenerateHuskyConfig(
+			utils.Props{
 				PackageManagerToUse: packageManagerToUse,
 				PackageJsonPath:     constants.PATH_PACKAGE_JSON,
+				UseCommitlint:       useCommitlint,
 				ShouldPublishToNpm:  shouldPublishToNpm,
 			},
 		)
+	}()
+
+	if useCommitlint {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+
+			utils.GenerateCommitlintConfig(
+				utils.CommitlintProps{
+					PackageManagerToUse: packageManagerToUse,
+					PackageJsonPath:     constants.PATH_PACKAGE_JSON,
+					ShouldPublishToNpm:  shouldPublishToNpm,
+				},
+			)
+		}()
 	}
+
+	wg.Wait()
 
 	utils.WriteMessage(utils.WriteMessageProps{
 		Type:    enums.MessageTypeSuccess,

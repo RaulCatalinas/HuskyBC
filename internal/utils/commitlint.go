@@ -32,15 +32,6 @@ func GenerateCommitlintConfig(commitlintProps CommitlintProps) {
 		Message: "Configuring commitlint...",
 	})
 
-	InstallDependencies(InstallProps{
-		PackageManagerToUse: commitlintProps.PackageManagerToUse,
-		PackagesToInstall: []string{
-			"lint-staged",
-			"@commitlint/cli",
-			"@commitlint/config-conventional",
-		},
-	})
-
 	addScript(addScriptProps{
 		PackageJsonPath: commitlintProps.PackageJsonPath,
 		ScriptsToAdd: []packageJsonScript{
