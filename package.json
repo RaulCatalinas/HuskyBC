@@ -1,41 +1,6 @@
 {
   "name": "huskybc",
-  "main": "dist/index.cjs",
-  "type": "module",
   "version": "1.0.0",
-  "bin": {
-    "huskybc": "dist/index.cjs"
-  },
-  "scripts": {
-    "prepare": "husky",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "format": "prettier src --check",
-    "format:write": "prettier src --write",
-    "build": "vite build",
-    "prepublishOnly": "bun run build"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "19.5.0",
-    "@commitlint/config-conventional": "19.5.0",
-    "@eslint/js": "^9.12.0",
-    "@types/bun": "1.1.11",
-    "@types/fs-extra": "11.0.4",
-    "@types/inquirer": "9.0.7",
-    "@types/npmcli__promise-spawn": "6.0.3",
-    "@types/opener": "1.4.3",
-    "eslint": "^9.12.0",
-    "eslint-config-love": "87.0.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-prettier": "5.2.1",
-    "husky": "9.1.6",
-    "lint-staged": "15.2.10",
-    "markdownlint": "0.35.0",
-    "prettier": "3.3.3",
-    "typescript": "5.6.3",
-    "vite": "5.4.9",
-    "vite-tsconfig-paths": "5.0.1"
-  },
   "contributors": [
     {
       "name": "Raul Catalinas",
@@ -52,8 +17,7 @@
     "url": "https://github.com/RaulCatalinas/HuskyBC"
   },
   "bugs": {
-    "url": "https://github.com/RaulCatalinas/HuskyBC/issues",
-    "email": "raulcatalinas@gmail.com"
+    "url": "https://github.com/RaulCatalinas/HuskyBC/issues"
   },
   "keywords": [
     "husky",
