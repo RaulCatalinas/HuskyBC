@@ -6,14 +6,31 @@ before:
     - go mod tidy
 
 builds:
-  - binary: huskybc
+  - id: huskybc
+    binary: huskybc
     goos:
       - windows
       - darwin
       - linux
     goarch:
       - amd64
-      - arm64
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}-
+      {{- .Version }}-
+      {{- .Os }}-
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
 
 changelog:
   sort: asc
