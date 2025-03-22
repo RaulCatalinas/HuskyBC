@@ -6,31 +6,28 @@ before:
     - go mod tidy
 
 builds:
-  - id: huskybc
-    binary: huskybc
+  - binary: huskybc
     goos:
       - windows
       - darwin
       - linux
     goarch:
       - amd64
-    env:
-      - CGO_ENABLED=0
-    flags:
-      - -trimpath
-    ldflags:
-      - -s -w -X main.version={{.Version}}
+      - arm64
+    dir: .
+    hooks:
+      post:
+        # Move binaries to npm-package/bin folder after compilation
+        - cmd: mv {{ .Path }} npm-package/bin/{{ .Binary }}-{{ .Os }}{{ if eq .Os "windows" }}.exe{{ end }}
+          dir: .
 
+# Specify the main output folder
+dist: npm-package/bin
+
+# Disable default packing to use our own structure
 archives:
-  - format: tar.gz
-    name_template: >-
-      {{ .ProjectName }}-
-      {{- .Version }}-
-      {{- .Os }}-
-      {{- .Arch }}
-    format_overrides:
-      - goos: windows
-        format: zip
+  - format: binary
+    name_template: "{{ .Binary }}-{{ .Os }}-{{ .Arch }}"
 
 changelog:
   sort: asc

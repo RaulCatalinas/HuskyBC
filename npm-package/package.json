@@ -1,6 +1,14 @@
 {
   "name": "huskybc",
   "version": "1.0.0",
+  "description": "A CLI tool to configure husky and commitlint in your project",
+  "bin": {
+    "huskybc": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "bin"
+  ],
   "contributors": [
     {
       "name": "Raul Catalinas",
