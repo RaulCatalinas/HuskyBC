@@ -14,20 +14,14 @@ builds:
     goarch:
       - amd64
       - arm64
-    dir: .
-    hooks:
-      post:
-        # Move binaries to npm-package/bin folder after compilation
-        - cmd: mv {{ .Path }} npm-package/bin/{{ .Binary }}-{{ .Os }}{{ if eq .Os "windows" }}.exe{{ end }}
-          dir: .
+
+# Avoid creating compressed files
+archives:
+  - format: binary
+    name_template: "{{ .Binary }}"
 
 # Specify the main output folder
 dist: npm-package/bin
-
-# Disable default packing to use our own structure
-archives:
-  - format: binary
-    name_template: "{{ .Binary }}-{{ .Os }}-{{ .Arch }}"
 
 changelog:
   sort: asc
