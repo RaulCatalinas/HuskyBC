@@ -1,30 +1,19 @@
-# HuskyBC
+# 🐶 HuskyBC
 
-HuskyBC is a command line for easy Husky configuration
+Simplify Husky configuration with a single command. HuskyBC is an intuitive CLI that automates Git hooks setup to improve your development workflow.
 
-## Run
+## 🤝 Contributing
 
-1. Install the CLI
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on how to get started, our code of conduct, and the process for submitting pull requests.
 
-| Package Manager | Installation Command     |
-| --------------- | ------------------------ |
-| npm             | `npm install -g huskybc` |
-| pnpm            | `pnpm add -g huskybc`    |
-| yarn            | `yarn add -g huskybc`    |
-| bun             | `bun add -g huskybc`     |
+## 👥 Contributors
 
-2. Run the CLI
+Learn more about the team behind HuskyBC on our [Contributors page](AUTHORS.md).
 
-```bash
-huskybc
-```
+## 📄 License
 
-## Feedback
+This work is licensed under a [Creative Commons BY-NC-SA](LICENSE.md).
 
-If you have any feedback, please reach out to us at <raulcatalinas@gmail.com>
+## 🌟 Acknowledgments
 
-## Project Overview
-
-This project is developed by a team of passionate contributors.
-
-To learn more about the people behind the project, please visit the [Contributors](AUTHORS.md) page.
+- [Husky](https://github.com/typicode/husky) - The tool that makes Git hooks management possible
