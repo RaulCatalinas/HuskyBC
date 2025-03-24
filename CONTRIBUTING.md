@@ -80,7 +80,7 @@ git commit -m "Your descriptive commit message"
 2. **Push Your Changes**
 
 ```bash
-git push origin dev
+git push
 ```
 
 3. **Create a Pull Request**
