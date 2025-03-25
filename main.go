@@ -1,9 +1,8 @@
 package main
 
-import (
-	"github.com/RaulCatalinas/HuskyBC/internal/config"
-)
+import "github.com/RaulCatalinas/HuskyBC/internal/config"
 
 func main() {
-	config.ConfigureOptions()
+	optionsManager := config.NewOptionManager()
+	optionsManager.ExecuteSelectedOption()
 }
