@@ -36,7 +36,7 @@ func (defaultHelpFormatter *defaultHelpFormatter) Format(options []types.Option)
 	for _, option := range options {
 		fmt.Fprintf(
 			&builder,
-			formatTemplate,
+			"  "+formatTemplate,
 			nameWidth, option.Name,
 			aliasWidth, option.Alias,
 			option.Description,
