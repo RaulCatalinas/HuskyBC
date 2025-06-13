@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A CLI tool to configure husky and commitlint in your project",
   "bin": {
-    "huskybc": "./index.js"
+    "huskybc": "index.js"
   },
   "files": [
     "index.js",
@@ -22,7 +22,7 @@
   "readme": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RaulCatalinas/HuskyBC"
+    "url": "git+https://github.com/RaulCatalinas/HuskyBC.git"
   },
   "bugs": {
     "url": "https://github.com/RaulCatalinas/HuskyBC/issues"
