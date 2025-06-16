@@ -11,14 +11,14 @@ builds:
       - windows
       - darwin
       - linux
+
     goarch:
       - amd64
       - arm64
-    
+
     hooks:
       post:
         - upx --best --lzma --force-macos {{ .Path }}
-      
 
 # Avoid creating compressed files
 archives:
