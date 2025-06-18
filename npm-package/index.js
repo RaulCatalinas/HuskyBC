@@ -9,16 +9,16 @@ const arch = os.arch()
 
 const binName = {
   win32: {
-    x64: "HuskyBC_windows_amd64_v1/huskybc.exe",
-    arm64: "HuskyBC_windows_arm64/huskybc.exe",
+    x64: "huskybc-windows-amd64.exe",
+    arm64: "huskybc-windows-arm64.exe",
   },
   darwin: {
-    x64: "HuskyBC_darwin_amd64_v1/huskybc",
-    arm64: "HuskyBC_darwin_arm64/huskybc",
+    x64: "huskybc-darwin-amd64",
+    arm64: "huskybc-darwin-arm64",
   },
   linux: {
-    x64: "HuskyBC_linux_amd64_v1/huskybc",
-    arm64: "HuskyBC_linux_arm64/huskybc",
+    x64: "huskybc-linux-amd64",
+    arm64: "huskybc-linux-arm64",
   },
 }
 
