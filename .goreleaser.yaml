@@ -6,7 +6,8 @@ before:
     - go mod tidy
 
 builds:
-  - binary: huskybc
+  - binary: huskybc-{{ .Os }}-{{ .Arch }}
+
     goos:
       - windows
       - darwin
@@ -16,14 +17,20 @@ builds:
       - amd64
       - arm64
 
-    hooks:
-      post:
-        - upx --best --lzma --force-macos {{ .Path }}
+    ldflags:
+      - -s -w
+
+    gcflags:
+      - -trimpath
+
+    env:
+      - CGO_ENABLED=0
+
+    no_unique_dist_dir: true
 
 # Avoid creating compressed files
 archives:
-  - format: binary
-    name_template: "{{ .Binary }}"
+  - formats: ["binary"]
 
 # Specify the main output folder
 dist: npm-package/bin
