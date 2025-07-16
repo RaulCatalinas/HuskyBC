@@ -1,10 +1,5 @@
 {
-  "markdownlint.config": {
-    "default": true,
-    "MD029": false
-  },
-  "cSpell.words": [
-    "Checkin",
-    "webbrowser"
-  ]
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
