@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 const { spawn } = require("child_process")
-const path = require("path")
-const os = require("os")
+const { join } = require("path")
+const { platform, arch } = require("os")
 
-const platform = os.platform()
-const arch = os.arch()
+const userPlatform = platform()
+const userArch = arch()
 
-const binName = {
+const binName = Object.freeze({
   win32: {
     x64: "huskybc-windows-amd64.exe",
     arm64: "huskybc-windows-arm64.exe",
@@ -20,16 +20,18 @@ const binName = {
     x64: "huskybc-linux-amd64",
     arm64: "huskybc-linux-arm64",
   },
-}
+})
 
-const platformBin = binName[platform]?.[arch]
+const platformBin = binName[userPlatform]?.[userArch]
 
 if (!platformBin) {
-  console.error(`Platform ${platform} with architecture ${arch} not supported`)
+  console.error(
+    `Platform ${userPlatform} with architecture ${userArch} not supported`
+  )
   process.exit(1)
 }
 
-const binPath = path.join(__dirname, "bin", platformBin)
+const binPath = join(__dirname, "bin", platformBin)
 
 const args = process.argv.slice(2).map((arg) => arg.trim())
 
