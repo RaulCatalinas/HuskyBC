@@ -42,5 +42,5 @@
     "commitlint-config",
     "husky-hooks"
   ],
-  "license": "CC-BY-NC-SA-4.0"
+  "license": "GPL-3.0"
 }
