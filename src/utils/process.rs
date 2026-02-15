@@ -1,6 +1,6 @@
 use std::process::{Command, Stdio, exit};
 
-pub fn execute_command(program: &str, args: &[&str], exit_on_failure: Option<bool>) {
+pub fn execute_command(program: &str, args: &[&str]) {
     match Command::new(program)
         .args(args)
         .stdout(Stdio::piped())
@@ -20,16 +20,13 @@ pub fn execute_command(program: &str, args: &[&str], exit_on_failure: Option<boo
                     program, output.status
                 );
 
-                if exit_on_failure.unwrap_or(false) {
-                    exit(1);
-                }
+                exit(1);
             }
         }
         Err(e) => {
             eprintln!("✗ Failed to execute '{}': {}", program, e);
-            if exit_on_failure.unwrap_or(false) {
-                exit(1);
-            }
+
+            exit(1);
         }
     }
 }
