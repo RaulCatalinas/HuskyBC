@@ -1,6 +1,6 @@
 use crate::constants::GITHUB_REPO_URL;
 
-pub fn handle_collaborate(_: &[String]) {
+pub fn handle_collaborate() {
     println!("Opening HuskyBC repository...");
 
     match open::that(GITHUB_REPO_URL) {

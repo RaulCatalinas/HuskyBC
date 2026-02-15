@@ -3,5 +3,7 @@ pub mod handlers;
 pub mod types;
 
 fn main() {
-    let _ = handlers::handle_collaborate(&[]);
+    let args: Vec<String> = std::env::args().collect();
+
+    handlers::handle_input(args);
 }

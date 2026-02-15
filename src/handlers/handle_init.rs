@@ -1,1 +1,3 @@
-pub fn handle_init(_args: &[String]) {}
+pub fn handle_init() {
+    println!("Setting up Husky...")
+}
