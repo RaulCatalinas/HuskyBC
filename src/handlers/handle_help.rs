@@ -1,6 +1,6 @@
-use crate::{constants::COMMANDS, types::CommandResult};
+use crate::constants::COMMANDS;
 
-pub fn handle_help(_: &[String]) -> CommandResult {
+pub fn handle_help(_: &[String]) {
     println!("Usage: huskybc [options]\n");
     println!("Command line for easy Husky configuration\n");
 
@@ -10,6 +10,4 @@ pub fn handle_help(_: &[String]) -> CommandResult {
             cmd.full_command, cmd.command_alias, cmd.description
         );
     }
-
-    Ok(())
 }

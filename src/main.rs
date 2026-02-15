@@ -3,5 +3,5 @@ pub mod handlers;
 pub mod types;
 
 fn main() {
-    println!("Hello, world!");
+    let _ = handlers::handle_collaborate(&[]);
 }
