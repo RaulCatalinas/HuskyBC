@@ -1,4 +1,8 @@
-use crate::{handlers::core::common::get_install_command, utils::execute_command};
+use crate::{
+    cli::will_be_published_on_npm,
+    handlers::core::common::get_install_command,
+    utils::{execute_command, write_scripts_in_package_json},
+};
 
 pub fn handle_husky_config() {
     let (package_manager, mut args) = get_install_command();
@@ -13,7 +17,7 @@ pub fn handle_husky_config() {
     }
 
     if package_manager == "pnpm" {
-        execute_command("npx", &["exec", "husky", "init"]);
+        execute_command("pnpm", &["exec", "husky", "init"]);
         return;
     }
 
@@ -22,5 +26,12 @@ pub fn handle_husky_config() {
         return;
     }
 
-    todo!("Add logic to configure husky with yarn")
+    let mut scripts = vec![("postinstall", "husky")];
+
+    if will_be_published_on_npm() {
+        scripts.push(("prepack", "pinst --disable"));
+        scripts.push(("postpack", "pinst --enable"));
+    }
+
+    write_scripts_in_package_json(scripts);
 }

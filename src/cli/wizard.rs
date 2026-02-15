@@ -1,6 +1,6 @@
 use std::process::exit;
 
-use inquire::Select;
+use inquire::{Confirm, Select};
 
 use crate::constants::WIZARD_OPTION_FUNCTIONS;
 
@@ -29,6 +29,21 @@ pub fn select_package_manger() -> String {
         Err(e) => {
             eprintln!("Selection cancelled or failed: {}", e);
 
+            exit(1);
+        }
+    }
+}
+
+pub fn will_be_published_on_npm() -> bool {
+    let ans = Confirm::new("Publish to npm?")
+        .with_default(false)
+        .with_help_message("Adds prepack/postpack scripts for Yarn")
+        .prompt();
+
+    match ans {
+        Ok(published) => published,
+        Err(e) => {
+            eprintln!("Selection cancelled: {}", e);
             exit(1);
         }
     }
