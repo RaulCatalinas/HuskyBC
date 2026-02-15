@@ -1,3 +1,4 @@
+pub mod core;
 mod handle_collaborate;
 mod handle_help;
 mod handle_init;

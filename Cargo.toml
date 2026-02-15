@@ -4,4 +4,6 @@ version = "1.0.0"
 edition = "2024"
 
 [dependencies]
+inquire = "0.9.3"
 open = "5.3.3"
+phf = {version = "0.13.1", features = ["macros"]}
