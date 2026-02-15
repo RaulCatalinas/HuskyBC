@@ -18,3 +18,18 @@ pub fn select_config_option() -> String {
         }
     }
 }
+
+pub fn select_package_manger() -> String {
+    let options = vec!["npm", "pnpm", "yarn", "bun"];
+
+    let ans = Select::new("Which package manager do you want to use?", options).prompt();
+
+    match ans {
+        Ok(choice) => choice.to_string(),
+        Err(e) => {
+            eprintln!("Selection cancelled or failed: {}", e);
+
+            exit(1);
+        }
+    }
+}

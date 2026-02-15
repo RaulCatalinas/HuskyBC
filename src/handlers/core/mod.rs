@@ -1,3 +1,4 @@
+mod common;
 mod handle_full_configuration;
 mod handle_husky_commitlint;
 mod handle_husky_config;
