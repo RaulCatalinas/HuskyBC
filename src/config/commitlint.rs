@@ -9,7 +9,7 @@ pub fn config(ctx: CliContext) {
         PackageManager::Npm => "npx --no -- commitlint --edit $1",
         PackageManager::Pnpm => "pnpm dlx commitlint --edit $1",
         PackageManager::Bun => "bunx commitlint --edit $1",
-        PackageManager::Yarn => "yarn commitlint --edit $1",
+        PackageManager::Yarn => "yarn dlx commitlint --edit $1",
     };
 
     let thread_1 = spawn(move || {

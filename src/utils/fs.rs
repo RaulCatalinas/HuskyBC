@@ -76,3 +76,25 @@ pub fn write_file(path: &str, file_name: &str, content: &str) {
         &format!("Failed to write {}", full_path.display()),
     );
 }
+
+pub fn write_json_file(path: &str, file_name: &str, content: &str) {
+    let json_value: Value = match serde_json::from_str(content) {
+        Ok(json) => json,
+        Err(e) => {
+            eprintln!("✗ Invalid JSON content: {}", e);
+            exit(1);
+        }
+    };
+
+    let formatted = match serde_json::to_string_pretty(&json_value) {
+        Ok(json) => json,
+        Err(e) => {
+            eprintln!("✗ Error serializing JSON: {}", e);
+            exit(1);
+        }
+    };
+
+    write_file(path, file_name, &formatted);
+
+    println!("✓ JSON written to {}", file_name);
+}
