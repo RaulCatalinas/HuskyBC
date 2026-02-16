@@ -16,7 +16,7 @@ There are many ways you can contribute to the project:
 
 ### Prerequisites
 
-- Go (latest version recommended)
+- Rust (latest version recommended)
 - Git
 - GitHub CLI (optional)
 
