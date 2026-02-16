@@ -1,0 +1,31 @@
+name: Blank Issue
+description: Create a blank issue for general questions or discussions
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Thanks for opening an issue!
+        
+        Please provide a clear and descriptive title above, and use the space below to describe your question, discussion topic, or any other feedback.
+
+  - type: textarea
+    id: content
+    attributes:
+      label: Issue Content
+      description: Describe your question, suggestion, or feedback
+      placeholder: What would you like to discuss?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this isn't a duplicate
+          required: true
+        - label: This is not a bug report or feature request (use the specific templates for those)
+          required: false
