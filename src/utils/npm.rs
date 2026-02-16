@@ -1,6 +1,14 @@
-use crate::{types::PackageManager, utils::execute::execute_command};
+use crate::{
+    types::PackageManager,
+    utils::{
+        execute::execute_command,
+        terminal::{start_spinner, stop_spinner},
+    },
+};
 
 pub fn install_dependencies(package_manager: PackageManager, deps: &[&str]) {
+    let spinner = start_spinner("Installing dependencies");
+
     let mut args: Vec<&str> = vec![];
 
     if package_manager == PackageManager::Npm {
@@ -13,4 +21,6 @@ pub fn install_dependencies(package_manager: PackageManager, deps: &[&str]) {
     args.extend(deps);
 
     execute_command(package_manager.as_str(), &args);
+
+    stop_spinner(&spinner, "Dependencies successfully installed");
 }

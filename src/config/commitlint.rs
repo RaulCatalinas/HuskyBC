@@ -1,10 +1,15 @@
 use crate::{
     types::{CliContext, PackageManager},
-    utils::fs::write_file,
+    utils::{
+        fs::write_file,
+        terminal::{start_spinner, stop_spinner},
+    },
 };
 use std::{process::exit, thread::spawn};
 
 pub fn config(ctx: CliContext) {
+    let spinner = start_spinner("Configuring Commitlint");
+
     let commitlint_command = match ctx.package_manager {
         PackageManager::Npm => "npx --no -- commitlint --edit $1",
         PackageManager::Pnpm => "pnpm dlx commitlint --edit $1",
@@ -33,4 +38,6 @@ pub fn config(ctx: CliContext) {
         eprintln!("✗ Thread 2 panicked: {:?}", e);
         exit(1);
     }
+
+    stop_spinner(&spinner, "Commitlint successfully configured");
 }
