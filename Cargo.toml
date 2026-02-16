@@ -8,3 +8,10 @@ inquire = "0.9.3"
 open = "5.3.3"
 phf = {version = "0.13.1", features = ["macros"]}
 serde_json = "1.0.149"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
