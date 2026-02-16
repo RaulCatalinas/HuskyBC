@@ -1,5 +1,5 @@
 use serde_json::{Value, json};
-use std::{fs, path::Path, process::exit};
+use std::{fs, io::Result, path::Path, process::exit};
 
 pub fn is_nodejs_project() -> bool {
     Path::new("package.json").exists()
@@ -48,4 +48,31 @@ pub fn write_scripts_in_package_json(scripts: Vec<(&str, &str)>) {
     }
 
     println!("✓ Scripts added to package.json");
+}
+
+fn handle_io_result<T>(result: Result<T>, success_msg: &str, error_context: &str) {
+    match result {
+        Ok(_) => println!("✓ {}", success_msg),
+        Err(e) => {
+            eprintln!("✗ {}: {}", error_context, e);
+            exit(1);
+        }
+    }
+}
+
+pub fn write_file(path: &str, file_name: &str, content: &str) {
+    let dir_path = Path::new(path);
+    let full_path = dir_path.join(file_name);
+
+    handle_io_result(
+        fs::create_dir_all(dir_path),
+        &format!("Created directory {}", dir_path.display()),
+        &format!("Failed to create directory {}", dir_path.display()),
+    );
+
+    handle_io_result(
+        fs::write(&full_path, content),
+        &format!("Created {}", full_path.display()),
+        &format!("Failed to write {}", full_path.display()),
+    );
 }
