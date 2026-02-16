@@ -5,7 +5,6 @@ use crate::{
         terminal::{start_spinner, stop_spinner},
     },
 };
-use std::{process::exit, thread::spawn};
 
 pub fn config(ctx: CliContext) {
     let spinner = start_spinner("Configuring Commitlint");
@@ -17,27 +16,12 @@ pub fn config(ctx: CliContext) {
         PackageManager::Yarn => "yarn dlx commitlint --edit $1",
     };
 
-    let thread_1 = spawn(move || {
-        write_file(
-            ".",
-            "commitlint.config.mjs",
-            "export default { extends: ['@commitlint/config-conventional'] };",
-        );
-    });
-
-    let thread_2 = spawn(move || {
-        write_file(".husky", "commit-msg", commitlint_command);
-    });
-
-    if let Err(e) = thread_1.join() {
-        eprintln!("✗ Thread 1 panicked: {:?}", e);
-        exit(1);
-    }
-
-    if let Err(e) = thread_2.join() {
-        eprintln!("✗ Thread 2 panicked: {:?}", e);
-        exit(1);
-    }
+    write_file(
+        ".",
+        "commitlint.config.mjs",
+        "export default { extends: ['@commitlint/config-conventional'] };",
+    );
+    write_file(".husky", "commit-msg", commitlint_command);
 
     stop_spinner(&spinner, "Commitlint successfully configured");
 }

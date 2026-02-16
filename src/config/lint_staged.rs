@@ -31,5 +31,6 @@ pub fn config(ctx: CliContext) {
     );
 
     write_file(".husky", "pre-commit", lint_stage_content);
+
     stop_spinner(&spinner, "lint-staged successfully configured");
 }
