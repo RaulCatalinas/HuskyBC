@@ -1,3 +1,5 @@
+use std::{process::exit, thread::spawn};
+
 use crate::{
     config::{commitlint, husky, lint_staged},
     types::CliContext,
@@ -16,6 +18,17 @@ pub fn execute(ctx: CliContext) {
     );
 
     husky::config(ctx);
-    lint_staged::config(ctx);
-    commitlint::config(ctx);
+
+    let thread_1 = spawn(move || lint_staged::config(ctx));
+    let thread_2 = spawn(move || commitlint::config(ctx));
+
+    if let Err(e) = thread_1.join() {
+        eprintln!("✗ Full configuration thread 1 panicked: {:?}", e);
+        exit(1);
+    }
+
+    if let Err(e) = thread_2.join() {
+        eprintln!("✗ Full configuration thread 2 panicked: {:?}", e);
+        exit(1);
+    }
 }
