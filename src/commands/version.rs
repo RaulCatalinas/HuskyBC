@@ -1,5 +1,5 @@
 use crate::constants::VERSION;
 
-pub fn handle_version() {
+pub fn execute() {
     println!("HuskyBC -> {}", VERSION)
 }

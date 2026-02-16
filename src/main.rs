@@ -1,11 +1,10 @@
 pub mod cli;
+pub mod commands;
+pub mod config;
 pub mod constants;
-pub mod handlers;
 pub mod types;
 pub mod utils;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-
-    handlers::handle_input(args);
+    cli::input::parse_and_dispatch();
 }

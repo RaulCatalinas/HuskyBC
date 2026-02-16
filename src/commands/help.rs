@@ -1,6 +1,6 @@
 use crate::constants::COMMANDS;
 
-pub fn handle_help() {
+pub fn execute() {
     println!("Usage: huskybc [options]\n");
     println!("Command line for easy Husky configuration\n");
 

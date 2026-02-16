@@ -1,10 +1,11 @@
 use crate::{
-    cli::will_be_published_on_npm,
-    handlers::core::common::get_install_command,
-    utils::{execute_command, write_scripts_in_package_json},
+    cli::prompts::will_be_published_on_npm,
+    utils::{
+        execute::execute_command, fs::write_scripts_in_package_json, npm::get_install_command,
+    },
 };
 
-pub fn handle_husky_config() {
+pub fn config() {
     let (package_manager, mut args) = get_install_command();
 
     args.push("husky");

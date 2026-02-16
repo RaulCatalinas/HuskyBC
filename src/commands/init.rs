@@ -1,10 +1,11 @@
 use std::process::exit;
 
 use crate::{
-    cli::select_config_option, constants::WIZARD_OPTION_FUNCTIONS, utils::is_nodejs_project,
+    cli::wizard::select_config_option, constants::WIZARD_OPTION_FUNCTIONS,
+    utils::fs::is_nodejs_project,
 };
 
-pub fn handle_init() {
+pub fn execute() {
     if !is_nodejs_project() {
         eprintln!("❌ Error: package.json not found");
         eprintln!("Make sure you're in a Node.js project");
