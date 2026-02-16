@@ -1,28 +1,21 @@
 use crate::{
     cli::prompts::will_be_published_on_npm,
-    utils::{
-        execute::execute_command, fs::write_scripts_in_package_json, npm::get_install_command,
-    },
+    types::{CliContext, PackageManager},
+    utils::{execute::execute_command, fs::write_scripts_in_package_json},
 };
 
-pub fn config() {
-    let (package_manager, mut args) = get_install_command();
-
-    args.push("husky");
-
-    execute_command(&package_manager, &args);
-
-    if package_manager == "npm" {
+pub fn config(ctx: CliContext) {
+    if ctx.package_manager == PackageManager::Npm {
         execute_command("npx", &["husky", "init"]);
         return;
     }
 
-    if package_manager == "pnpm" {
+    if ctx.package_manager == PackageManager::Pnpm {
         execute_command("pnpm", &["exec", "husky", "init"]);
         return;
     }
 
-    if package_manager == "bun" {
+    if ctx.package_manager == PackageManager::Bun {
         execute_command("bunx", &["husky", "init"]);
         return;
     }

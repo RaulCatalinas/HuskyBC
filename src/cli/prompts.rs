@@ -2,16 +2,17 @@ use std::process::exit;
 
 use inquire::{Confirm, Select};
 
-pub fn select_package_manger() -> String {
-    let options = vec!["npm", "pnpm", "yarn", "bun"];
+use crate::types::PackageManager;
+
+pub fn select_package_manger() -> PackageManager {
+    let options = PackageManager::ALL.to_vec();
 
     let ans = Select::new("Which package manager do you want to use?", options).prompt();
 
     match ans {
-        Ok(choice) => choice.to_string(),
+        Ok(choice) => choice,
         Err(e) => {
             eprintln!("Selection cancelled or failed: {}", e);
-
             exit(1);
         }
     }

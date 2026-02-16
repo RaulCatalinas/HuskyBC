@@ -1,17 +1,16 @@
-use crate::cli::prompts::select_package_manger;
+use crate::{types::PackageManager, utils::execute::execute_command};
 
-pub fn get_install_command() -> (String, Vec<&'static str>) {
-    let package_manger = select_package_manger();
+pub fn install_dependencies(package_manager: PackageManager, deps: &[&str]) {
+    let mut args: Vec<&str> = vec![];
 
-    let mut install_command_args: Vec<&'static str> = vec![];
-
-    if package_manger == "npm" {
-        install_command_args.push("install");
+    if package_manager == PackageManager::Npm {
+        args.push("install");
     } else {
-        install_command_args.push("add");
+        args.push("add");
     }
 
-    install_command_args.push("-D");
+    args.push("-D");
+    args.extend(deps);
 
-    return (package_manger, install_command_args);
+    execute_command(package_manager.as_str(), &args);
 }

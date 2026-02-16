@@ -1,8 +1,11 @@
 use phf::{Map, phf_map};
 
-use crate::config::presets::{basic, full, with_commitlint, with_lint_staged};
+use crate::{
+    config::presets::{basic, full, with_commitlint, with_lint_staged},
+    types::CliContext,
+};
 
-pub const WIZARD_OPTION_FUNCTIONS: Map<&'static str, fn()> = phf_map! {
+pub const WIZARD_OPTION_FUNCTIONS: Map<&'static str, fn(ctx: CliContext)> = phf_map! {
     "Only Husky" => basic::execute,
     "Husky + Commitlint" => with_commitlint::execute,
     "Husky + Lint-staged" => with_lint_staged::execute,

@@ -1,7 +1,12 @@
 use std::process::exit;
 
 use crate::{
-    cli::wizard::select_config_option, constants::WIZARD_OPTION_FUNCTIONS,
+    cli::{
+        prompts::{select_package_manger, will_be_published_on_npm},
+        wizard::select_config_option,
+    },
+    constants::WIZARD_OPTION_FUNCTIONS,
+    types::{CliContext, PackageManager},
     utils::fs::is_nodejs_project,
 };
 
@@ -13,9 +18,22 @@ pub fn execute() {
         exit(1);
     }
 
+    let package_manager = select_package_manger();
+
+    let will_publish = if package_manager == PackageManager::Yarn {
+        will_be_published_on_npm()
+    } else {
+        false
+    };
+
+    let ctx = CliContext {
+        package_manager,
+        will_publish,
+    };
+
     let choice = select_config_option();
 
     let func = WIZARD_OPTION_FUNCTIONS.get(&choice).unwrap();
 
-    func();
+    func(ctx);
 }
