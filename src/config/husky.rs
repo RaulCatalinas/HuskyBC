@@ -1,16 +1,10 @@
 use crate::{
     cli::prompts::will_be_published_on_npm,
     types::{CliContext, PackageManager},
-    utils::{
-        execute::execute_command,
-        fs::write_scripts_in_package_json,
-        terminal::{start_spinner, stop_spinner},
-    },
+    utils::{execute::execute_command, fs::write_scripts_in_package_json},
 };
 
 pub fn config(ctx: CliContext) {
-    let spinner = start_spinner("Configuring Husky");
-
     if ctx.package_manager == PackageManager::Npm {
         execute_command("npx", &["husky", "init"]);
         return;
@@ -34,5 +28,4 @@ pub fn config(ctx: CliContext) {
     }
 
     write_scripts_in_package_json(scripts);
-    stop_spinner(&spinner, "Husky successfully configured");
 }
