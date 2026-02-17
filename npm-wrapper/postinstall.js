@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { mkdir, unlink, access, chmod } = require("node:fs/promises")
+const { mkdir, unlink, access, chmod, writeFile } = require("node:fs/promises")
 const { createWriteStream } = require("node:fs")
 const { Readable } = require("node:stream")
 const { finished } = require("node:stream/promises")
@@ -37,6 +37,24 @@ function getBinaryName() {
   return `huskybc-${mappedArch}-${mappedPlatform}${ext}`
 }
 
+function getInstallDir() {
+  const home = process.env.HOME || process.env.USERPROFILE
+
+  const dirs = {
+    win32: join(
+      process.env.APPDATA || join(home, "AppData", "Roaming"),
+      "huskybc",
+    ),
+    darwin: join(home, "Library", "Application Support", "huskybc"),
+    linux: join(
+      process.env.XDG_DATA_HOME || join(home, ".local", "share"),
+      "huskybc",
+    ),
+  }
+
+  return dirs[process.platform] ?? join(home, ".huskybc")
+}
+
 async function getLatestReleaseUrl() {
   const binaryName = getBinaryName()
   const apiUrl = `https://api.github.com/repos/${REPO}/releases/latest`
@@ -56,8 +74,8 @@ async function getLatestReleaseUrl() {
     )
   }
 
-  const { assets } = await res.json()
-  const asset = assets.find((a) => a.name === binaryName)
+  const release = await res.json()
+  const asset = release.assets.find((a) => a.name === binaryName)
 
   if (!asset) {
     throw new Error(
@@ -119,15 +137,13 @@ async function fileExists(filePath) {
 
 async function install() {
   try {
-    const binDir = join(__dirname, "bin")
+    const installDir = getInstallDir()
     const binaryPath = join(
-      binDir,
+      installDir,
       process.platform === "win32" ? "huskybc.exe" : "huskybc",
     )
 
-    if (!(await fileExists(binDir))) {
-      await mkdir(binDir, { recursive: true })
-    }
+    await mkdir(installDir, { recursive: true })
 
     if (await fileExists(binaryPath)) {
       console.log("✓ Binary already exists, skipping download")
