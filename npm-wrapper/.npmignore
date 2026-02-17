@@ -1,0 +1,39 @@
+# Ver qué archivos incluirá npm
+$ npm pack --dry-run
+
+# O crear el tarball y verificar
+$ npm pack
+$ tar -tzf huskybc-0.1.0.tgz
+```
+
+## **Tu `.npmignore` debería ser:**
+```
+# Lockfiles
+bun.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Rust source
+src/
+Cargo.toml
+Cargo.lock
+target/
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Development
+node_modules/
+.vscode/
+.idea/
+*.log
+
+# Tests
+tests/
+*.test.js
+
+# CI/CD
+.github/workflows/

@@ -8,5 +8,13 @@
         "source.fixAll": true,
       },
     },
+    "JavaScript": {
+      "format_on_save": "on",
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll": true,
+      },
+    },
   },
 }

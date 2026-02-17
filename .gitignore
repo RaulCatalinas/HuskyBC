@@ -1,1 +1,3 @@
 /target
+/npm-wrapper/node_modules
+/npm-wrapper/bin

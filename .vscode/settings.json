@@ -4,7 +4,15 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.codeActionsOnSave": {
       "source.organizeImports": "always",
-      "source.fixAll": "always",
+      "source.fixAll": "always"
+    }
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always",
+      "source.fixAll": "always"
     }
   }
 }
