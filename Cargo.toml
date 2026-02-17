@@ -8,7 +8,7 @@ colored = "3.1.1"
 indicatif = "0.18.4"
 inquire = "0.9.3"
 open = "5.3.3"
-phf = {version = "0.13.1", features = ["macros"]}
+phf = { version = "0.13.1", features = ["macros"] }
 serde_json = "1.0.149"
 
 [profile.release]
@@ -18,4 +18,3 @@ codegen-units = 1
 strip = true
 panic = "abort"
 incremental = false
-
