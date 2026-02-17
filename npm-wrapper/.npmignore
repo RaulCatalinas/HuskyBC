@@ -1,13 +1,3 @@
-# Ver qué archivos incluirá npm
-$ npm pack --dry-run
-
-# O crear el tarball y verificar
-$ npm pack
-$ tar -tzf huskybc-0.1.0.tgz
-```
-
-## **Tu `.npmignore` debería ser:**
-```
 # Lockfiles
 bun.lock
 package-lock.json
@@ -30,6 +20,8 @@ node_modules/
 .vscode/
 .idea/
 *.log
+prettierrc.yaml
+eslint.config.cjs
 
 # Tests
 tests/
