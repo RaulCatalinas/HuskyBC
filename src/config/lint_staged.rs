@@ -1,3 +1,5 @@
+use std::thread;
+
 use crate::{
     types::{CliContext, PackageManager},
     utils::{
@@ -16,21 +18,25 @@ pub fn config(ctx: CliContext) {
         PackageManager::Yarn => "yarn dlx lint-staged",
     };
 
-    write_json_file(
-        ".",
-        ".lintstagedrc",
-        r#"
-            {
-                "lint-staged": {
-                    "*": [
-                        "prettier --write --ignore-unknown"
-                    ]
-                }
-            }
-        "#,
-    );
+    thread::scope(|s| {
+        s.spawn(|| {
+            write_json_file(
+                ".",
+                ".lintstagedrc",
+                r#"
+                    {
+                        "lint-staged": {
+                            "*": [
+                                "prettier --write --ignore-unknown"
+                            ]
+                        }
+                    }
+                "#,
+            );
+        });
 
-    write_file(".husky", "pre-commit", lint_stage_content);
+        s.spawn(|| write_file(".husky", "pre-commit", lint_stage_content));
+    });
 
     stop_spinner(&spinner, "lint-staged successfully configured");
 }

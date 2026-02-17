@@ -1,3 +1,5 @@
+use std::thread;
+
 use crate::{
     types::{CliContext, PackageManager},
     utils::{
@@ -16,12 +18,17 @@ pub fn config(ctx: CliContext) {
         PackageManager::Yarn => "yarn dlx commitlint --edit $1",
     };
 
-    write_file(
-        ".",
-        "commitlint.config.mjs",
-        "export default { extends: ['@commitlint/config-conventional'] };",
-    );
-    write_file(".husky", "commit-msg", commitlint_command);
+    thread::scope(|s| {
+        s.spawn(|| {
+            write_file(
+                ".",
+                "commitlint.config.mjs",
+                "export default { extends: ['@commitlint/config-conventional'] };",
+            )
+        });
+
+        s.spawn(|| write_file(".husky", "commit-msg", commitlint_command));
+    });
 
     stop_spinner(&spinner, "Commitlint successfully configured");
 }

@@ -1,3 +1,5 @@
+use std::thread;
+
 use crate::{
     config::{commitlint, husky, lint_staged},
     types::CliContext,
@@ -25,8 +27,11 @@ pub fn execute(ctx: CliContext) {
     spinner = start_spinner("Setting up full Git hooks workflow...");
 
     husky::config(ctx);
-    lint_staged::config(ctx);
-    commitlint::config(ctx);
+
+    thread::scope(|s| {
+        s.spawn(|| lint_staged::config(ctx));
+        s.spawn(|| commitlint::config(ctx));
+    });
 
     stop_spinner(&spinner, "Full configuration ready");
 }
