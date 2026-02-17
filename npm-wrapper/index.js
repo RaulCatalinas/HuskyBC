@@ -17,6 +17,24 @@ const archMap = {
   arm64: "aarch64",
 }
 
+function getInstallDir() {
+  const home = process.env.HOME || process.env.USERPROFILE
+
+  const dirs = {
+    win32: join(
+      process.env.APPDATA || join(home, "AppData", "Roaming"),
+      "huskybc",
+    ),
+    darwin: join(home, "Library", "Application Support", "huskybc"),
+    linux: join(
+      process.env.XDG_DATA_HOME || join(home, ".local", "share"),
+      "huskybc",
+    ),
+  }
+
+  return dirs[process.platform] ?? join(home, ".huskybc")
+}
+
 const mappedPlatform = platformMap[platform]
 const mappedArch = archMap[arch]
 
@@ -26,8 +44,8 @@ if (!mappedPlatform || !mappedArch) {
 }
 
 const ext = platform === "win32" ? ".exe" : ""
-const binaryName = `bin/huskybc-${mappedArch}-${mappedPlatform}${ext}`
-const binPath = join(__dirname, binaryName)
+const binaryName = `huskybc-${mappedArch}-${mappedPlatform}${ext}`
+const binPath = join(getInstallDir(), binaryName)
 
 const proc = spawn(binPath, process.argv.slice(2), {
   stdio: "inherit",
