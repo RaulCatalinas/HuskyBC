@@ -138,10 +138,7 @@ async function fileExists(filePath) {
 async function install() {
   try {
     const installDir = getInstallDir()
-    const binaryPath = join(
-      installDir,
-      process.platform === "win32" ? "huskybc.exe" : "huskybc",
-    )
+    const binaryPath = join(installDir, getBinaryName())
 
     await mkdir(installDir, { recursive: true })
 
