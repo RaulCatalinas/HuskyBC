@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "v*.*.*"
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -45,7 +47,7 @@ jobs:
             target: x86_64-apple-darwin
             name: huskybc-x86_64-macos
 
-          # macOS aarch64 (Apple Silicon)
+          # macOS aarch64 (Apple Silicon - M1/M2/M3)
           - os: macos-latest
             target: aarch64-apple-darwin
             name: huskybc-aarch64-macos
