@@ -1,22 +1,48 @@
 {
   "name": "huskybc",
   "version": "1.0.0",
-  "description": "Simplify Husky configuration with a single command. HuskyBC is an intuitive CLI that automates Git hooks setup to improve your development workflow.",
-  "scripts": {
-    "postinstall": "node postinstall.js"
-  },
+  "description": "Unofficial CLI to automate Husky configuration - simplify Git hooks setup with commitlint and lint-staged",
   "devDependencies": {
     "eslint-config-prettier": "10.1.8",
     "globals": "17.3.0",
-    "prettier": "3.8.1"
+    "prettier": "3.8.1",
+    "eslint": "10.0.0"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js"
   },
   "bin": {
     "huskybc": "index.js"
   },
-  "files": [
-    "index.js",
-    "postinstall.js"
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
   ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "keywords": [
+    "husky",
+    "git-hooks",
+    "commitlint",
+    "lint-staged",
+    "cli",
+    "automation",
+    "git",
+    "hooks",
+    "configuration",
+    "setup",
+    "unofficial"
+  ],
+  "author": {
+    "name": "Raul Catalinas",
+    "url": "https://github.com/RaulCatalinas"
+  },
   "contributors": [
     {
       "name": "Raul Catalinas",
@@ -27,7 +53,7 @@
       "url": "https://github.com/xxxAlvaDevxxx"
     }
   ],
-  "readme": "README.md",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RaulCatalinas/HuskyBC.git"
@@ -35,15 +61,5 @@
   "bugs": {
     "url": "https://github.com/RaulCatalinas/HuskyBC/issues"
   },
-  "keywords": [
-    "husky",
-    "commitlint",
-    "cli",
-    "command-line-tool",
-    "command-line-interface",
-    "husky-config",
-    "commitlint-config",
-    "husky-hooks"
-  ],
-  "license": "GPL-3.0"
+  "homepage": "https://github.com/RaulCatalinas/HuskyBC"
 }
