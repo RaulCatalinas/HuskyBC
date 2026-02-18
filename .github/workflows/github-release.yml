@@ -45,7 +45,7 @@ jobs:
             target: x86_64-apple-darwin
             name: huskybc-x86_64-macos
 
-          # macOS aarch64 (Apple Silicon - M1/M2/M3)
+          # macOS aarch64 (Apple Silicon)
           - os: macos-latest
             target: aarch64-apple-darwin
             name: huskybc-aarch64-macos
@@ -72,7 +72,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc-aarch64-linux-gnu
 
+      - name: Install cross
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: cargo install cross --git https://github.com/cross-rs/cross
+
+      - name: Build (ARM)
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: cross build --release --target ${{ matrix.target }}
+
       - name: Build
+        if: matrix.target != 'aarch64-unknown-linux-gnu'
         run: cargo build --release --target ${{ matrix.target }}
 
       - name: Rename binary (Unix)
