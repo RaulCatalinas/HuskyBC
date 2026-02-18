@@ -35,7 +35,14 @@ pub fn config(ctx: CliContext) {
             );
         });
 
-        s.spawn(|| write_file(".husky", "pre-commit", lint_stage_content));
+        s.spawn(|| {
+            write_file(
+                ".husky",
+                "pre-commit",
+                lint_stage_content,
+                "pre-commit hook created",
+            )
+        });
     });
 
     stop_spinner(&spinner, "lint-staged successfully configured");

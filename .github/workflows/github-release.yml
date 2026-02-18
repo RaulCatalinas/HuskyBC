@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - "v*.*.*"
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -54,7 +52,7 @@ jobs:
 
           # Windows x86_64
           - os: windows-latest
-            target: x86_64-pc-windows-gnu
+            target: x86_64-pc-windows-msvc
             name: huskybc-x86_64-windows.exe
 
     runs-on: ${{ matrix.os }}

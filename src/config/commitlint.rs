@@ -24,10 +24,18 @@ pub fn config(ctx: CliContext) {
                 ".",
                 "commitlint.config.mjs",
                 "export default { extends: ['@commitlint/config-conventional'] };",
+                "commitlint.config.mjs created",
             )
         });
 
-        s.spawn(|| write_file(".husky", "commit-msg", commitlint_command));
+        s.spawn(|| {
+            write_file(
+                ".husky",
+                "commit-msg",
+                commitlint_command,
+                "commit-msg hook created",
+            )
+        });
     });
 
     stop_spinner(&spinner, "Commitlint successfully configured");
