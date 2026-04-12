@@ -4,8 +4,8 @@
   "description": "Unofficial CLI to automate Husky configuration - simplify Git hooks setup with commitlint and lint-staged",
   "devDependencies": {
     "eslint-config-prettier": "10.1.8",
-    "globals": "17.4.0",
-    "prettier": "3.8.1",
+    "globals": "17.5.0",
+    "prettier": "3.8.2",
     "eslint": "10.2.0"
   },
   "scripts": {
